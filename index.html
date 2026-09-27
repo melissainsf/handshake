@@ -109,9 +109,9 @@ footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
 
 <section id="thesis">
   <h2>The thesis</h2>
-  <p class="sub">Most journeys are designed top-down: the white-glove motion first, then stripped down for the long tail. I'd do the reverse, across the two tiers this role owns: the long tail and Mid-Market.</p>
+  <p class="sub">Most journeys are designed top-down: the white-glove motion first, then stripped down for SMB. I'd do the reverse, across the two tiers this role owns: SMB and Mid-Market.</p>
   <div class="grid3">
-    <div class="card"><span class="pill p-base">Base</span><h3 style="margin-top:8px">One automated journey</h3><p class="note" style="font-size:14px;color:var(--ink2)">Built for the long tail first: every milestone has an automated touch (Gainsight Journey Orchestrator email, Appcues in-app) and a self-serve path.</p></div>
+    <div class="card"><span class="pill p-base">Base</span><h3 style="margin-top:8px">One automated journey</h3><p class="note" style="font-size:14px;color:var(--ink2)">Built for SMB first: every milestone has an automated touch (Gainsight Journey Orchestrator email, Appcues in-app) and a self-serve path.</p></div>
     <div class="card"><span class="pill p-add">Added</span><h3 style="margin-top:8px">Human touches layered on</h3><p class="note" style="font-size:14px;color:var(--ink2)">Mid-Market gets the same base, plus human touches where a CSM's time is worth it.</p></div>
     <div class="card"><span class="pill p-swap">Swapped</span><h3 style="margin-top:8px">Or swapped, when tested</h3><p class="note" style="font-size:14px;color:var(--ink2)">Where a test shows a human touch beats the automated one for Mid-Market, the outreach is swapped. The self-serve tool behind it never goes away.</p></div>
   </div>
@@ -137,7 +137,7 @@ footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
   <div class="stages" id="stages"></div>
   <p class="note">See it running: the <a href="#proto">Journey board</a> in the prototype moves accounts through these stages week by week.</p>
   <h3>The tier matrix</h3>
-  <p class="sub" style="margin-bottom:10px">Rows are the journey; the long-tail column is the base Mid-Market starts from. Enterprise accounts are owned by the Enterprise team and are not part of this journey.</p>
+  <p class="sub" style="margin-bottom:10px">Rows are the journey; the SMB column is the base Mid-Market starts from. Enterprise accounts are owned by the Enterprise team and are not part of this journey.</p>
   <div class="scroll"><table class="tbl" id="matrix"></table></div>
   <p class="note">Legend: <span class="pill p-base">Base</span> automated, available to every tier · <span class="pill p-add">Added</span> human touch on top of the base · <span class="pill p-swap">Swapped</span> automated outreach replaced by a person (self-serve stays). Swaps marked "tested" show an illustrative result.</p>
 </section>
@@ -146,9 +146,9 @@ footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
   <div class="qhead"><span class="qnum">Question 1</span><h2>First program: Milestone 2 on autopilot, paced by the season</h2></div>
   <p class="sub">One digital engagement program to prioritize first: what it is, what problem it solves, and why it's first.</p>
   <div class="grid3">
-    <div class="card"><div class="who" style="color:var(--base)">What it is</div><p>An automated program that gets every new long-tail employer from signed to <b>a live posting that is drawing quality applicants</b> (Handshake's Milestone 2) before their current recruiting window closes. Delivered through Gainsight JO emails and Appcues guides on the posting pages; paced by how many weeks are left in the window.</p></div>
+    <div class="card"><div class="who" style="color:var(--base)">What it is</div><p>An automated program that gets every new SMB employer from signed to <b>a live posting that is drawing quality applicants</b> (Handshake's Milestone 2) before their current recruiting window closes. Delivered through Gainsight JO emails and Appcues guides on the posting pages; paced by how many weeks are left in the window.</p></div>
     <div class="card"><div class="who" style="color:var(--swap)">The problem it solves</div><p>A low-ARR employer whose first posting quietly underperforms has no CSM to notice. They conclude "Handshake doesn't work for us", and we find out at renewal, a season too late. Today's lifecycle emails are calendar-based, so they can't tell a thriving posting from a dead one.</p></div>
-    <div class="card"><div class="who" style="color:var(--add)">Why it's first</div><p>1) Quality applicants is the value an employer pays for, so it's the milestone closest to revenue. 2) Everything after it (promotions, measuring, renewal, expansion) depends on it. 3) It's the long tail, where bottom-up starts. 4) The season is a hard clock: a week lost in October can't be bought back in March. 5) It runs on data that already exists: postings and applicants <span class="pill p-warn">to validate</span>.</p></div>
+    <div class="card"><div class="who" style="color:var(--add)">Why it's first</div><p>1) Quality applicants is the value an employer pays for, so it's the milestone closest to revenue. 2) Everything after it (promotions, measuring, renewal, expansion) depends on it. 3) It's SMB, where bottom-up starts. 4) The season is a hard clock: a week lost in October can't be bought back in March. 5) It runs on data that already exists: postings and applicants <span class="pill p-warn">to validate</span>.</p></div>
   </div>
   <h3>How the program runs</h3>
   <div class="scroll"><table class="tbl">
@@ -164,7 +164,7 @@ footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
 
 <section id="q2">
   <div class="qhead"><span class="qnum">Question 2</span><h2>AI workflow: the underperforming-posting rescue</h2></div>
-  <p class="sub">Specified at step level. It serves Milestone 2 for the long tail and Mid-Market; only where the human sits changes. Enterprise accounts are excluded.</p>
+  <p class="sub">Specified at step level. It serves Milestone 2 for SMB and Mid-Market; only where the human sits changes. Enterprise accounts are excluded.</p>
   <div class="steps">
     <div class="step"><div class="n">1</div><div><h4>Trigger, and what fires it</h4>
       <p><b>Condition:</b> a posting has been live 7 days (5 if under 4 weeks remain in the window) with applicants below <b>50% of the benchmark</b> for comparable postings: same role family, location type, and school targeting.</p>
@@ -178,16 +178,16 @@ footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
           <tr><td>Benchmark: comparable postings that hit target, and what they had in common</td><td><span class="src">Data warehouse</span></td><td>Grounds every suggestion in evidence</td></tr>
           <tr><td>Tier, ARR, renewal date, health score, CSM, prior touches</td><td><span class="src">Gainsight</span></td><td>Routing and tone; no repeat of an ignored suggestion</td></tr>
           <tr><td>In-app guide history: seen, dismissed, completed</td><td><span class="src">Appcues</span></td><td>Don't re-show what they dismissed</td></tr>
-          <tr><td>Call summaries, if any (usually none in the long tail)</td><td><span class="src">Gong</span></td><td>Context: hiring plans, stated goals</td></tr>
+          <tr><td>Call summaries, if any (usually none in SMB)</td><td><span class="src">Gong</span></td><td>Context: hiring plans, stated goals</td></tr>
           <tr><td>Posting best-practice playbooks and help articles</td><td><span class="src">Glean</span></td><td>The fix links to Handshake's own guidance</td></tr>
           <tr><td>Season calendar: days left in the current window</td><td><span class="src">Config</span></td><td>Urgency and pacing</td></tr>
         </tbody></table></div></div></div>
     <div class="step"><div class="n">3</div><div><h4>Diagnose <span class="pill p-base">system decides</span></h4><p>An LLM (Claude or ChatGPT, whichever wins our evaluation set) compares the posting with the benchmark and returns a structured result: up to three likely causes, each tied to a specific field and the benchmark evidence, plus a confidence score. Numbers are passed in from the data, never generated.</p></div></div>
-    <div class="step"><div class="n">4</div><div><h4>Draft the fix <span class="pill p-base">system decides</span></h4><p>The specific edits (e.g. "add a pay range", "add these 6 schools that fill similar roles"), an email from the account's owner (the scaled CS team in the long tail, the named CSM above it), and an Appcues guide on the posting's edit page that walks through the same edits with one click to apply.</p></div></div>
+    <div class="step"><div class="n">4</div><div><h4>Draft the fix <span class="pill p-base">system decides</span></h4><p>The specific edits (e.g. "add a pay range", "add these 6 schools that fill similar roles"), an email from the account's owner (the scaled CS team in SMB, the named CSM above it), and an Appcues guide on the posting's edit page that walks through the same edits with one click to apply.</p></div></div>
     <div class="step"><div class="n">5</div><div><h4>Automated checks <span class="pill p-base">system decides</span></h4><p>Every number in the draft matches an input; no promises of outcomes; links resolve; tone and brand rules pass; confidence is above threshold. Any failure routes the draft to a person instead of sending.</p></div></div>
     <div class="step"><div class="n">6</div><div><h4>Route by tier <span class="pill p-swap">the human line</span></h4>
       <div class="scroll" style="margin-top:6px"><table class="tbl"><thead><tr><th>Tier</th><th>At launch</th><th>Why the line is there</th></tr></thead><tbody>
-        <tr><td>Long tail</td><td>A person approves every draft (Phase 1), then a sample (Phase 2+)</td><td>Until we've measured accuracy, one wrong diagnosis at scale is thousands of wrong emails</td></tr>
+        <tr><td>SMB</td><td>A person approves every draft (Phase 1), then a sample (Phase 2+)</td><td>Until we've measured accuracy, one wrong diagnosis at scale is thousands of wrong emails</td></tr>
         <tr><td>Mid-Market</td><td>The account's CSM approves or edits in a Gainsight task; 1-business-day deadline, then it falls back to the base email</td><td>A revenue-bearing relationship: the CSM owns what the customer hears</td></tr>
         <tr><td>Any tier, renewal within 90 days</td><td>Always a person</td><td>A wrong message during renewal costs more than a slow one</td></tr>
       </tbody></table></div></div></div>
@@ -198,7 +198,7 @@ footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
   <div class="ladder">
     <div class="card"><span class="pill p-mute">Phase 0 · shadow</span><h4 style="margin-top:8px">AI drafts, people send their own</h4><p>Compare AI diagnoses with what CSMs would have said. Builds the evaluation set.</p></div>
     <div class="card"><span class="pill p-add">Phase 1</span><h4 style="margin-top:8px">A person approves every draft</h4><p>Entry: AI matches the CSM diagnosis on 85%+ of 200 shadow cases.</p></div>
-    <div class="card"><span class="pill p-base">Phase 2</span><h4 style="margin-top:8px">Long tail sends on its own</h4><p>Entry: 95%+ approved with light or no edits over 4 weeks; zero factual errors in audit; lift over holdout. A 10% weekly sample is still audited.</p></div>
+    <div class="card"><span class="pill p-base">Phase 2</span><h4 style="margin-top:8px">SMB sends on its own</h4><p>Entry: 95%+ approved with light or no edits over 4 weeks; zero factual errors in audit; lift over holdout. A 10% weekly sample is still audited.</p></div>
     <div class="card"><span class="pill p-warn">Phase 3</span><h4 style="margin-top:8px">Pre-fills the fix in the posting</h4><p>The customer still clicks "apply"; we never edit a posting without consent. Entry: Phase 2 stable for a full season; legal and brand sign-off.</p></div>
   </div>
   <p class="note">Mid-Market stays human-in-the-loop by design (the tier choice), not because the AI isn't trusted.</p>
@@ -210,8 +210,8 @@ footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
   <div class="grid2">
     <div class="card"><h3 style="margin-top:0">The program (Question 1)</h3>
       <p><b>Leading:</b> % of new employers reaching Milestone 2 before their window closes · median days signed → Milestone 2 · Milestone 1 checklist completion.</p>
-      <p><b>Lagging:</b> first-season results (applicants per posting, roles filled) · logo renewal and GRR for the long-tail cohort · NRR including expansion into promotions, AI Sourcing and Insights Pro <span class="pill p-warn">to validate</span>.</p>
-      <p><b>Compared against:</b> a randomized 15% holdout of new long-tail employers who get today's lifecycle emails, <b>in the same season</b>, so seasonal swings can't fake a win.</p>
+      <p><b>Lagging:</b> first-season results (applicants per posting, roles filled) · logo renewal and GRR for the SMB cohort · NRR including expansion into promotions, AI Sourcing and Insights Pro <span class="pill p-warn">to validate</span>.</p>
+      <p><b>Compared against:</b> a randomized 15% holdout of new SMB employers who get today's lifecycle emails, <b>in the same season</b>, so seasonal swings can't fake a win.</p>
       <p><b>Shut it off if:</b> after one full window, Milestone 2-before-close is not at least <b>5 points</b> above holdout; or unsubscribes exceed <b>0.5%</b> per send, or spam complaints <b>0.1%</b>.</p></div>
     <div class="card"><h3 style="margin-top:0">The AI workflow (Question 2)</h3>
       <p><b>Leading:</b> draft approval rate and how much people edit · fix applied within 7 days · applicants in the 7 days after, against flagged postings that got nothing · CSM minutes per rescue.</p>
@@ -244,7 +244,7 @@ footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
       <li>Product names: Campaigns, Promotions, Hiring Intelligence / AI Sourcing, Insights Pro, and which are paid</li>
       <li>Whether posting and applicant data can reach Gainsight nightly</li></ul></div>
     <div class="card"><h3 style="margin-top:0">Questions for the panel</h3><ul style="margin:0;padding-left:18px;color:var(--ink2);font-size:14px">
-      <li>The role manages three Mid-Market CSMs and leads the tech-touch strategy: does the digital motion cover the long tail only, or Mid-Market too? (This page assumes both, and excludes Enterprise.)</li>
+      <li>The role manages three Mid-Market CSMs and leads the tech-touch strategy: does the digital motion cover SMB only, or Mid-Market too? (This page assumes both, and excludes Enterprise.)</li>
       <li>How are tiers cut today: ARR, employer size, or something else?</li>
       <li>Is Gainsight Journey Orchestrator the email engine, or is that in a marketing tool?</li>
       <li>What does "quality applicant" mean internally, and is it measured?</li></ul></div>
@@ -273,30 +273,30 @@ const M = [
   ['Renewal', ['base', 'Season results recap + renewal link, 60 days out'], ['add', 'CSM-led renewal review']]
 ];
 const PL = { base: ['p-base', 'Base'], add: ['p-add', 'Added'], swap: ['p-swap', 'Swapped'] };
-document.getElementById('matrix').innerHTML = '<thead><tr><th>Journey step</th><th>Long tail (the base)</th><th>Mid-Market</th></tr></thead><tbody>' +
+document.getElementById('matrix').innerHTML = '<thead><tr><th>Journey step</th><th>SMB (the base)</th><th>Mid-Market</th></tr></thead><tbody>' +
   M.map(r => '<tr><td><b>' + r[0] + '</b></td>' + r.slice(1).map(([k, t]) => `<td class="cell"><span class="pill ${PL[k][0]}">${PL[k][1]}</span><div>${t}</div></td>`).join('') + '</tr>').join('') + '</tbody>';
 
 // ─── Prototype: posting rescue ──────────────────────────────────────────────
 const POSTS = [
-  { id: 'a', emp: 'Brightpath Logistics', tier: 'Long tail', arr: '$4.2k', renew: 210, csm: 'Scaled CS team', title: 'Operations Analyst Intern', days: 7, weeks: 6, apps: 9, bench: 38, views: 410, pay: null, schools: 4, benchSchools: 12, desc: 180, benchDesc: 420, gong: null,
+  { id: 'a', emp: 'Brightpath Logistics', tier: 'SMB', arr: '$4.2k', renew: 210, csm: 'Scaled CS team', title: 'Operations Analyst Intern', days: 7, weeks: 6, apps: 9, bench: 38, views: 410, pay: null, schools: 4, benchSchools: 12, desc: 180, benchDesc: 420, gong: null,
     causes: [['No pay range listed', 'pay', '87% of benchmark postings list pay; postings with pay get 2.1× the applies'], ['Targeting only 4 schools', 'schools', 'Comparable postings that hit target reach a median of 12 schools'], ['Short description (180 words)', 'desc', 'Benchmark median is 420 words, with a "what you\'ll learn" section']], conf: 0.91 },
   { id: 'b', emp: 'Cedarline Health', tier: 'Mid-Market', arr: '$38k', renew: 140, csm: 'Naomi Park', title: 'Patient Experience Associate', days: 7, weeks: 3, apps: 14, bench: 44, views: 1210, pay: '$21–24/hr', schools: 15, benchSchools: 14, desc: 520, benchDesc: 450, gong: 'Kickoff call: wants 10 hires before May; worried about applicant quality',
     causes: [['Views are fine, applies are low: the apply step asks for 3 documents', 'apply', 'Benchmark postings ask for a résumé only; 2 extra uploads cut completion by ~60%'], ['Title reads senior for early talent', 'title', 'Similar postings that fill use "Associate (Entry-level)"']], conf: 0.84 },
-  { id: 'c', emp: 'Tidewater Credit Union', tier: 'Long tail', arr: '$6.8k', renew: 45, csm: 'Scaled CS team', title: 'Member Services Intern', days: 5, weeks: 3, apps: 6, bench: 29, views: 640, pay: '$18/hr', schools: 2, benchSchools: 10, desc: 390, benchDesc: 400, gong: null,
+  { id: 'c', emp: 'Tidewater Credit Union', tier: 'SMB', arr: '$6.8k', renew: 45, csm: 'Scaled CS team', title: 'Member Services Intern', days: 5, weeks: 3, apps: 6, bench: 29, views: 640, pay: '$18/hr', schools: 2, benchSchools: 10, desc: 390, benchDesc: 400, gong: null,
     causes: [['Targeting only 2 schools', 'schools', 'Comparable postings that hit target reach a median of 10 schools, mostly within 50 miles'], ['Posted 3 weeks before the window closes', 'timing', 'With 3 weeks left, the trigger fires at day 5 instead of 7']], conf: 0.88 }
 ];
 let cur = POSTS[0];
 const src = s => `<span class="src">${s}</span>`;
 function route(p) {
   if (p.renew <= 90) return ['A person, always', 'Renewal is ' + p.renew + ' days out: a wrong message during renewal costs more than a slow one.', 'p-warn'];
-  if (p.tier === 'Long tail') return ['Today: a person approves (Phase 1)', 'Long tail, checks passed, confidence ' + p.conf + '. Once the Phase 2 gates are met (see Approval queue), this sends on its own and enters the 10% audit sample at random.', 'p-base'];
+  if (p.tier === 'SMB') return ['Today: a person approves (Phase 1)', 'SMB, checks passed, confidence ' + p.conf + '. Once the Phase 2 gates are met (see Approval queue), this sends on its own and enters the 10% audit sample at random.', 'p-base'];
   if (p.tier === 'Mid-Market') return ['CSM approval: ' + p.csm, 'Gainsight task, 1-business-day deadline, then falls back to the base email.', 'p-add'];
 }
 function renderRun() {
   document.getElementById('pick').innerHTML = POSTS.map(p => `<button class="${p === cur ? 'on' : ''}" data-id="${p.id}"><b>${p.emp}</b><br><span class="note">${p.tier} · ${p.title}</span></button>`).join('');
   document.querySelectorAll('#pick button').forEach(b => b.onclick = () => { cur = POSTS.find(p => p.id === b.dataset.id); renderRun(); });
   const p = cur, fired = p.apps < p.bench * 0.5 && p.days >= (p.weeks < 4 ? 5 : 7), [who, why, cls] = route(p);
-  const draft = `Subject: A quick fix for your ${p.title} posting\n\nHi — your ${p.title} posting has ${p.apps} applicants after ${p.days} days. Similar postings at this point have around ${p.bench}.\n\n${p.causes.map((c, i) => `${i + 1}. ${c[0]}. ${c[2]}.`).join('\n')}\n\nThe edit page has a guide that walks through these in about two minutes. There are ${p.weeks} weeks left in this recruiting window.\n\n— ${p.tier === 'Long tail' ? 'The Handshake Customer Success team' : p.csm}`;
+  const draft = `Subject: A quick fix for your ${p.title} posting\n\nHi — your ${p.title} posting has ${p.apps} applicants after ${p.days} days. Similar postings at this point have around ${p.bench}.\n\n${p.causes.map((c, i) => `${i + 1}. ${c[0]}. ${c[2]}.`).join('\n')}\n\nThe edit page has a guide that walks through these in about two minutes. There are ${p.weeks} weeks left in this recruiting window.\n\n— ${p.tier === 'SMB' ? 'The Handshake Customer Success team' : p.csm}`;
   const nums = [p.apps, p.bench, p.days, p.weeks], okNums = nums.every(n => draft.includes(String(n)));
   document.getElementById('runout').innerHTML = `
     <div class="card"><h4><span class="pill p-mute">Step 1</span> Trigger ${fired ? '<span class="ok">fired</span>' : '<span class="no">not fired</span>'}</h4>
@@ -324,10 +324,10 @@ function renderRun() {
 const Q = [
   ['Cedarline Health', 'Mid-Market', 'Patient Experience Associate', 'Apply step asks for 3 documents'],
   ['Maple & Finch Retail', 'Mid-Market', 'Store Management Trainee', 'Pay range missing'],
-  ['Tidewater Credit Union', 'Long tail', 'Member Services Intern', 'Renewal in 60 days: routed to a person'],
+  ['Tidewater Credit Union', 'SMB', 'Member Services Intern', 'Renewal in 60 days: routed to a person'],
   ['Summit Ridge Analytics', 'Mid-Market', 'Data Analyst I', 'Targeting 3 schools vs benchmark 11'],
   ['Kestrel Aerospace', 'Mid-Market', 'Manufacturing Engineering Co-op', 'Title reads senior for early talent'],
-  ['Juniper Civic Partners', 'Long tail', 'Policy Fellow', 'Confidence 0.74: routed to a person'],
+  ['Juniper Civic Partners', 'SMB', 'Policy Fellow', 'Confidence 0.74: routed to a person'],
   ['Harborview Hotels', 'Mid-Market', 'Hospitality Leadership Program', 'Description 140 words vs 430'],
   ['Alder & Moss Legal', 'Mid-Market', 'Paralegal Assistant', 'Posted on-site only; benchmark offers hybrid']
 ].map((r, i) => ({ i, emp: r[0], tier: r[1], title: r[2], why: r[3], state: null }));
@@ -340,11 +340,11 @@ function renderQueue() {
     <div class="scroll"><table class="tbl"><thead><tr><th>Employer</th><th>Tier</th><th>Posting</th><th>Why it's here</th><th>Decision</th></tr></thead><tbody>
       ${Q.map(q => `<tr><td><b>${q.emp}</b></td><td>${q.tier}</td><td>${q.title}</td><td>${q.why}</td><td>${q.state ? `<span class="pill ${q.state === 'rejected' ? 'p-bad' : q.state === 'edited' ? 'p-warn' : 'p-add'}">${q.state}</span>` : `<button class="btn pri" data-q="${q.i}" data-s="approved">Approve</button> <button class="btn" data-q="${q.i}" data-s="edited">Edit</button> <button class="btn" data-q="${q.i}" data-s="rejected">Reject</button>`}</td></tr>`).join('')}
     </tbody></table></div>
-    <h3>Phase 2 readiness (long tail auto-send)</h3>
+    <h3>Phase 2 readiness (SMB auto-send)</h3>
     <div class="scroll"><table class="tbl"><thead><tr><th>Gate</th><th>Now</th><th>Needed</th><th></th></tr></thead><tbody>
       ${gates.map(g => `<tr><td>${g[0]}</td><td><b>${g[1]}</b></td><td>${g[2]}</td><td>${g[3] ? '<span class="pill p-add">met</span>' : '<span class="pill p-warn">not yet</span>'}</td></tr>`).join('')}
     </tbody></table></div>
-    <p class="note">Why mostly Mid-Market: those drafts always need CSM approval by design. Long-tail drafts only appear here when a guardrail sends them to a person.</p>`;
+    <p class="note">Why mostly Mid-Market: those drafts always need CSM approval by design. SMB drafts only appear here when a guardrail sends them to a person.</p>`;
   document.querySelectorAll('#t-queue [data-q]').forEach(b => b.onclick = () => { Q[+b.dataset.q].state = b.dataset.s; renderQueue(); });
 }
 
@@ -377,13 +377,13 @@ function renderDash() {
       <div class="kpi"><div class="l">Accounts per CSM</div><div class="v">118</div><div class="s">Mid-Market · was 85</div></div>
       <div class="kpi"><div class="l">Self-serve rate</div><div class="v">41%</div><div class="s">Mid-Market issues solved via the base</div></div>
       <div class="kpi"><div class="l">Rescues sent</div><div class="v">1,240</div><div class="s">fall window to date</div></div>
-      <div class="kpi"><div class="l">Long-tail accounts</div><div class="v">6,400</div><div class="s">in the automated journey</div></div>
+      <div class="kpi"><div class="l">SMB accounts</div><div class="v">6,400</div><div class="s">in the automated journey</div></div>
     </div>`;
   if (typeof Chart === 'undefined') return;
   const cs = getComputedStyle(document.documentElement), c = v => cs.getPropertyValue(v).trim();
   Chart.defaults.color = c('--ink2'); Chart.defaults.borderColor = c('--line'); Chart.defaults.font.family = 'Inter, system-ui, sans-serif';
   Object.values(charts).forEach(x => x.destroy());
-  charts.m2 = new Chart(document.getElementById('cM2'), { type: 'bar', data: { labels: ['Long tail', 'Mid-Market'], datasets: [
+  charts.m2 = new Chart(document.getElementById('cM2'), { type: 'bar', data: { labels: ['SMB', 'Mid-Market'], datasets: [
     { label: 'Program', data: [64, 78], backgroundColor: c('--base'), borderRadius: 4, maxBarThickness: 34 },
     { label: 'Holdout', data: [51, 71], backgroundColor: c('--ink3'), borderRadius: 4, maxBarThickness: 34 }] },
     options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } } }, plugins: { tooltip: { callbacks: { label: x => x.dataset.label + ': ' + x.raw + '%' } } } } });
@@ -426,7 +426,7 @@ const BSUF = ['Logistics', 'Health', 'Analytics', 'Credit Union', 'Hotels', 'Eng
 const WIN = d => { const m = d.getMonth(); return m >= 7 && m <= 9 ? ['Aug–Oct window', 1.15] : m >= 10 || m === 0 ? ['Nov–Jan checkpoint', 0.85] : m <= 3 ? ['Feb–Apr window', 1.05] : ['Off-season', 0.7]; };
 const B = { week: 0, start: new Date(2026, 7, 3), accts: [], log: [], out: { Renewed: 0, Expanded: 0, Churned: 0 }, filter: 'all', sel: 3, seq: 0, byFar: {} };
 function newAcct(stage, cw) {
-  const tier = brnd() < 0.13 ? 'Mid-Market' : 'Long tail';
+  const tier = brnd() < 0.13 ? 'Mid-Market' : 'SMB';
   return { id: B.seq++, name: BPRE[Math.floor(brnd() * BPRE.length)] + ' ' + BSUF[Math.floor(brnd() * BSUF.length)], tier, s: stage, w: 0, cw, far: stage, stall: null, moved: false, stuck: brnd() < 0.2 };
 }
 // Existing book: most are in season; about a quarter never got past posting and sit stalled early.
@@ -470,7 +470,7 @@ function renderBoard() {
   const totalOut = B.out.Renewed + B.out.Expanded + B.out.Churned;
   document.getElementById('t-board').innerHTML = `
     <div class="bctl"><span class="wk">${fmtWk(d)}</span><span class="pill p-mute">${win}</span><span class="spacer"></span>
-      <div class="pick" style="margin:0">${['all', 'Long tail', 'Mid-Market'].map(f => `<button data-f="${f}" class="${B.filter === f ? 'on' : ''}" style="padding:5px 10px">${f === 'all' ? 'All accounts' : f}</button>`).join('')}</div>
+      <div class="pick" style="margin:0">${['all', 'SMB', 'Mid-Market'].map(f => `<button data-f="${f}" class="${B.filter === f ? 'on' : ''}" style="padding:5px 10px">${f === 'all' ? 'All accounts' : f}</button>`).join('')}</div>
       <button class="btn pri" id="bstep">Advance a week ▶</button><button class="btn" id="bplay">${B.timer ? 'Pause' : 'Play'}</button></div>
     <div class="legend"><span><i style="background:var(--base)"></i>On pace</span><span><i style="background:var(--warn)"></i>Stalled → automated rescue or nudge</span><span><i style="background:var(--add)"></i>Mid-Market stall → with CSM</span><span><i style="background:var(--add-l);border:1px solid var(--add)"></i>Moved this week</span></div>
     <div class="board">${STG.map((st, i) => { const c = A.filter(a => a.s === i).sort((x, y) => (y.moved ? 1 : 0) - (x.moved ? 1 : 0) || (y.stall ? 1 : 0) - (x.stall ? 1 : 0) || y.w - x.w);
