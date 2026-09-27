@@ -97,7 +97,7 @@ footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><b>Part 2</b><a href="#thesis">Thesis</a><a href="#lifecycle">Lifecycle</a><a href="#q1">1 · Program</a><a href="#q2">2 · AI workflow</a><a href="#q3">3 · Measurement</a><a href="#proto">Prototype</a><a href="#assume">Assumptions</a><a href="#ai">How I used AI</a></div></header>
+<header class="top"><div class="wrap"><b>Part 2</b><a href="#thesis">Thesis</a><a href="#lifecycle">Lifecycle</a><a href="#q1">1 · Program</a><a href="#q2">2 · AI workflow</a><a href="#q3">3 · Measurement</a><a href="#proto">Prototype</a><a href="#assume">Assumptions</a><a href="#ai">AI + MCP</a></div></header>
 
 <div class="wrap">
 <div class="hero">
@@ -252,9 +252,47 @@ footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
 </section>
 
 <section id="ai">
-  <h2>How I used AI to build this</h2>
-  <p class="sub">The brief asks; here's the honest version.</p>
-  <div class="card"><p style="margin-top:0">I workshopped the design with Claude over a working session: I brought the thesis (bottom-up journeys, swap-by-test), the priorities, and the corrections; Claude drafted, challenged, and built. Claude Code wrote this page and the prototype, and flagged every claim about Handshake it couldn't verify. That's why the yellow tags are there. The same approach built Part 1's dashboard.</p></div>
+  <h2>How I'd use AI to build and run this</h2>
+  <p class="sub">Every trigger, milestone and dashboard on this page comes out of the same loop: connect AI to the whole stack, ask questions of live data, test a trigger before switching it on, and keep a person on every write.</p>
+  <h3>1 · Connect AI to the stack through MCP</h3>
+  <p class="sub" style="margin-bottom:10px">MCP (Model Context Protocol) connectors let Claude, or another assistant, read from and act in the tools CS already uses. I'd use a vendor's MCP server where one exists, otherwise a small custom one over their API <span class="pill p-warn">to validate per tool</span>.</p>
+  <div class="scroll"><table class="tbl">
+    <thead><tr><th>System</th><th>What AI can read or do through it</th><th>Used for</th></tr></thead>
+    <tbody>
+      <tr><td><b>Gainsight</b></td><td>Accounts, tiers, health scores, renewal dates, tasks (CTAs), journey programs</td><td>Segmenting, routing, drafting journey programs and rules</td></tr>
+      <tr><td><b>Appcues</b></td><td>Guide and checklist performance: seen, completed, dismissed</td><td>Finding where in-app guidance loses people; drafting guide copy</td></tr>
+      <tr><td><b>Product data / warehouse</b></td><td>Postings, views, applicants, benchmarks (read-only SQL)</td><td>Triggers, milestone definitions, backtests, dashboards</td></tr>
+      <tr><td><b>Gong</b></td><td>Call transcripts and summaries</td><td>Why Mid-Market customers stall, in their own words</td></tr>
+      <tr><td><b>Glean</b></td><td>Playbooks, help articles, internal docs</td><td>Grounding every AI message in Handshake's own guidance</td></tr>
+      <tr><td><b>Slack</b></td><td>Post to channels and DMs</td><td>CSM alerts, the weekly shut-off digest, approval nudges</td></tr>
+    </tbody></table></div>
+
+  <h3>2 · The loop, for any journey point</h3>
+  <div class="ladder">
+    <div class="card"><span class="pill p-base">Ask</span><h4 style="margin-top:8px">Question in plain English</h4><p>"Which SMB employers posted this month but are under half their benchmark, by industry?" becomes a query across the warehouse and Gainsight in minutes, not a data-team ticket.</p></div>
+    <div class="card"><span class="pill p-base">See</span><h4 style="margin-top:8px">Visualize it</h4><p>The answer comes back as a chart or a working dashboard like the journey board above, not a CSV. Anyone on the team can ask the next question.</p></div>
+    <div class="card"><span class="pill p-add">Test</span><h4 style="margin-top:8px">Backtest the trigger</h4><p>Before a trigger goes live, run it against last season: how many accounts it would have fired on, how many recovered on their own, what it would have cost in CSM time.</p></div>
+    <div class="card"><span class="pill p-swap">Ship</span><h4 style="margin-top:8px">Draft, review, launch</h4><p>AI drafts the Gainsight rule, the journey program spec, the email and the Appcues guide copy. A person reviews and publishes, and every change is logged.</p></div>
+  </div>
+
+  <h3>3 · Example: designing the posting-rescue trigger</h3>
+  <div class="scroll"><table class="tbl">
+    <thead><tr><th>Step</th><th>What I'd ask</th><th>Connectors</th></tr></thead>
+    <tbody>
+      <tr><td>Find the moment</td><td>"For SMB employers who churned last year, where did they stop in the four milestones?"</td><td><span class="src">Gainsight</span> <span class="src">Warehouse</span></td></tr>
+      <tr><td>Set the threshold</td><td>"At what applicants-vs-benchmark ratio on day 7 do postings stop recovering on their own?"</td><td><span class="src">Warehouse</span></td></tr>
+      <tr><td>Backtest</td><td>"Run 'under 50% at day 7' over last fall: how many fires a week, and how many of those recovered anyway?"</td><td><span class="src">Warehouse</span></td></tr>
+      <tr><td>Write the fix content</td><td>"Draft the three most common fixes, using our posting playbook"</td><td><span class="src">Glean</span></td></tr>
+      <tr><td>Build it</td><td>"Draft the Gainsight rule and journey program spec, and the Appcues guide for the posting edit page"</td><td><span class="src">Gainsight</span> <span class="src">Appcues</span></td></tr>
+      <tr><td>Watch it</td><td>"Every Monday, post the shut-off monitor to #scaled-cs and flag anything past threshold"</td><td><span class="src">Warehouse</span> <span class="src">Slack</span></td></tr>
+    </tbody></table></div>
+
+  <h3>4 · Guardrails</h3>
+  <div class="grid2">
+    <div class="card"><b>Read-only by default.</b> Connectors start with read access. Anything that writes (sends a message, changes a CRM field, publishes a guide) goes through a person until it has earned autonomy, the same ladder as the posting rescue.</div>
+    <div class="card"><b>Data stays inside approved systems.</b> Connectors run under IT and security review, with access scoped to the CS team's own permissions and an audit log of every action.</div>
+  </div>
+  <p class="note" style="margin-top:14px">This page and its prototype were built the same way: designed in a working session with Claude and built with Claude Code. The real dashboard behind Part 1 already reads live CRM, Slack and database data through its own integrations.</p>
 </section>
 </div>
 <footer><div class="wrap">Prepared for the Manager, Scaled Customer Success panel · all prototype data is fictional · Handshake specifics marked "to validate" come from public materials.</div></footer>
