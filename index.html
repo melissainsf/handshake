@@ -77,6 +77,23 @@ section{padding:40px 0;border-top:1px solid var(--line)}
 .meter{height:8px;border-radius:4px;background:var(--surface2);overflow:hidden;margin-top:6px}.meter i{display:block;height:100%}
 footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
 .hide{display:none}
+.stages{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}@media (max-width:900px){.stages{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (max-width:520px){.stages{grid-template-columns:1fr}}
+.stg{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;font-size:13px}
+.stg .h{display:flex;gap:8px;align-items:center;margin-bottom:6px}.stg .num{width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--bg);font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.stg b{font-size:14px}.stg .k{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);margin-top:6px}.stg .v{color:var(--ink2)}
+.bctl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.bctl .wk{font-weight:700}.bctl .spacer{flex:1}
+.board{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(168px,1fr);gap:8px;overflow-x:auto;padding-bottom:6px}
+.col{background:var(--surface2);border-radius:10px;padding:8px;min-height:320px}
+.col .ch{cursor:pointer;padding:4px 4px 8px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.col .ch .t{font-size:12px;font-weight:700;line-height:1.25}.col .ch .c{font-size:22px;font-weight:700;line-height:1.1}.col .ch .m{font-size:11px;color:var(--ink3)}
+.col.sel{outline:2px solid var(--base)}
+.acct{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--base);border-radius:8px;padding:6px 8px;margin-bottom:6px;font-size:12px;transition:background .6s}
+.acct.moved{background:var(--add-l)}.acct .nm{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.acct .meta{color:var(--ink3);font-size:11px}
+.more{font-size:11.5px;color:var(--ink3);text-align:center;padding:4px}
+.log{font-size:12.5px;color:var(--ink2);max-height:180px;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--bg)}
+.log div{padding:2px 0;border-bottom:1px dashed var(--line)}.log div:last-child{border:none}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin:8px 0}.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
 </style>
 </head>
 <body>
@@ -115,6 +132,10 @@ footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
     <div class="card"><span class="pill p-warn">Nov – Jan · risk checkpoint</span><h3 style="margin:8px 0 4px">Mid-season review</h3><p class="note" style="font-size:13.5px;color:var(--ink2)">Automated results review; weak fall results flag renewal risk while there's still a spring to save.</p></div>
     <div class="card"><span class="pill p-mute">Feb – Apr</span><h3 style="margin:8px 0 4px">Spring window</h3><p class="note" style="font-size:13.5px;color:var(--ink2)">Reactivation for immediate-hire roles and remaining internship slots.</p></div>
   </div>
+  <h3>The stages</h3>
+  <p class="sub" style="margin-bottom:10px">Every account is in exactly one stage. A stage ends on a product event, not a date, which is what lets the journey react to each customer. Onboarding stages 2–6 follow Handshake's four milestones <span class="pill p-warn">to validate</span>.</p>
+  <div class="stages" id="stages"></div>
+  <p class="note">See it running: the <a href="#proto">Journey board</a> in the prototype moves accounts through these stages week by week.</p>
   <h3>The tier matrix</h3>
   <p class="sub" style="margin-bottom:10px">Rows are the journey; the long-tail column is the base Mid-Market starts from. Enterprise accounts are owned by the Enterprise team and are not part of this journey.</p>
   <div class="scroll"><table class="tbl" id="matrix"></table></div>
@@ -205,8 +226,9 @@ footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
   <h2>Working prototype</h2>
   <p class="sub">The workflow running on example postings, the approval queue, and the measurement dashboard. Fictional employers and numbers; the logic is the design above.</p>
   <div class="proto">
-    <div class="tabs"><button class="tab on" data-t="run">Posting rescue</button><button class="tab" data-t="queue">Approval queue</button><button class="tab" data-t="dash">Dashboard</button></div>
-    <div id="t-run"><div class="pick" id="pick"></div><div class="run" id="runout"></div></div>
+    <div class="tabs"><button class="tab on" data-t="board">Journey board</button><button class="tab" data-t="run">Posting rescue</button><button class="tab" data-t="queue">Approval queue</button><button class="tab" data-t="dash">Dashboard</button></div>
+    <div id="t-board"></div>
+    <div id="t-run" class="hide"><div class="pick" id="pick"></div><div class="run" id="runout"></div></div>
     <div id="t-queue" class="hide"></div>
     <div id="t-dash" class="hide"></div>
   </div>
@@ -373,11 +395,105 @@ function renderDash() {
 
 document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
   document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === t));
-  ['run', 'queue', 'dash'].forEach(k => document.getElementById('t-' + k).classList.toggle('hide', k !== t.dataset.t));
+  ['board', 'run', 'queue', 'dash'].forEach(k => document.getElementById('t-' + k).classList.toggle('hide', k !== t.dataset.t));
   if (t.dataset.t === 'queue') renderQueue();
   if (t.dataset.t === 'dash') renderDash();
 });
 renderRun();
+
+// ─── Stages + Journey board ─────────────────────────────────────────────────
+// A simulated book: existing accounts in season plus ~18 new signings a week.
+// Each week an account advances with a stage- and season-dependent chance;
+// a stall past the stage's limit triggers the automated rescue (or the CSM in
+// Mid-Market). 60 days before its contract anniversary every account enters
+// Renewal, and the outcome depends on how far it got. All fictional.
+const STG = [
+  { k: 'handoff', label: 'Handoff', exit: 'Admin logs in', auto: 'Welcome + pre-work; login reminders day 2 and 5', mm: 'Swapped: CSM kickoff call', p: 0.7, stall: 2 },
+  { k: 'setup', label: 'M1 · Getting started', exit: 'Profile, roles and brand complete', auto: 'Appcues setup checklist', mm: 'Added: CSM profile review', p: 0.55, stall: 3 },
+  { k: 'post', label: 'M2 · First posting', exit: 'First posting live', auto: 'Template picker + quality check; nudge day 3', mm: 'Added: CSM check-in if no posting in a week', p: 0.5, stall: 2 },
+  { k: 'apps', label: 'M2 · Quality applicants', exit: 'A posting reaches benchmark applicants', auto: 'AI posting rescue when under benchmark', mm: 'Added: CSM approves the rescue draft', p: 0.4, stall: 2 },
+  { k: 'promo', label: 'M3 · Promoting', exit: 'First promotion or campaign sent', auto: 'Promotion nudges triggered by results', mm: 'Added: CSM campaign planning', p: 0.35, stall: 4 },
+  { k: 'measure', label: 'M4 · Measuring', exit: 'Opens results twice', auto: 'Monthly results digest', mm: 'Added: CSM results walkthrough', p: 0.45, stall: 4 },
+  { k: 'season', label: 'In season', exit: 'Renewal window opens (60 days out)', auto: 'Window pushes; Nov–Jan results checkpoint', mm: 'Added: CSM checkpoint if under benchmark', p: 0, stall: 99 },
+  { k: 'renew', label: 'Renewal', exit: 'Renewed, expanded or churned', auto: 'Season results recap + renewal link', mm: 'Added: CSM renewal review', p: 0, stall: 99 }
+];
+document.getElementById('stages').innerHTML = STG.map((st, i) => `<div class="stg"><div class="h"><span class="num">${i + 1}</span><b>${st.label}</b></div>
+  <div class="k">Moves on when</div><div class="v">${st.exit}</div><div class="k">Automated (base)</div><div class="v">${st.auto}</div><div class="k">Mid-Market</div><div class="v">${st.mm}</div></div>`).join('');
+
+let bs = 0x2f6fdb; const brnd = () => { bs |= 0; bs = bs + 0x6D2B79F5 | 0; let t = Math.imul(bs ^ bs >>> 15, 1 | bs); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+const BPRE = ['Aster', 'Bramble', 'Copperline', 'Delta', 'Ember', 'Fjord', 'Granite', 'Harbor', 'Iris', 'Juniper', 'Kestrel', 'Linden', 'Maple', 'Nimbus', 'Orchard', 'Pioneer', 'Quarry', 'Riverbend', 'Summit', 'Tidewater', 'Vantage', 'Willow', 'Yarrow', 'Alder', 'Beacon', 'Cobalt', 'Driftwood', 'Evergreen'];
+const BSUF = ['Logistics', 'Health', 'Analytics', 'Credit Union', 'Hotels', 'Engineering', 'Retail', 'Legal', 'Foods', 'Energy', 'Software', 'Partners', 'Manufacturing', 'Media'];
+const WIN = d => { const m = d.getMonth(); return m >= 7 && m <= 9 ? ['Aug–Oct window', 1.15] : m >= 10 || m === 0 ? ['Nov–Jan checkpoint', 0.85] : m <= 3 ? ['Feb–Apr window', 1.05] : ['Off-season', 0.7]; };
+const B = { week: 0, start: new Date(2026, 7, 3), accts: [], log: [], out: { Renewed: 0, Expanded: 0, Churned: 0 }, filter: 'all', sel: 3, seq: 0, byFar: {} };
+function newAcct(stage, cw) {
+  const tier = brnd() < 0.13 ? 'Mid-Market' : 'Long tail';
+  return { id: B.seq++, name: BPRE[Math.floor(brnd() * BPRE.length)] + ' ' + BSUF[Math.floor(brnd() * BSUF.length)], tier, s: stage, w: 0, cw, far: stage, stall: null, moved: false, stuck: brnd() < 0.2 };
+}
+// Existing book: most are in season; about a quarter never got past posting and sit stalled early.
+for (let i = 0; i < 300; i++) { const early = brnd() < 0.25, st = early ? 1 + Math.floor(brnd() * 3) : 6, a = newAcct(st, Math.floor(brnd() * 44)); a.far = st; if (early) { a.stuck = true; a.w = 4 + Math.floor(brnd() * 12); a.stall = a.tier === 'Mid-Market' ? 'With CSM' : st === 3 ? 'AI rescue sent' : 'Nudged'; } B.accts.push(a); }
+const dateOf = w => new Date(+B.start + w * 7 * 864e5);
+function tick(quiet) {
+  const d = dateOf(B.week), [, mult] = WIN(d), ev = [];
+  B.accts.forEach(a => a.moved = false);
+  for (let i = 0; i < 18; i++) { const a = newAcct(0, 0); B.accts.push(a); if (i === 0) ev.push(`${a.name} signed (${a.tier}) → Handoff`); }
+  B.accts.forEach(a => {
+    a.cw++; a.w++;
+    if (a.s < 6) {
+      const st = STG[a.s], rescued = a.stall != null, p = Math.min(0.95, st.p * mult * (a.tier === 'Mid-Market' ? 1.25 : 1) * (rescued ? 1.4 : 1) * (a.stuck ? 0.12 : 1));
+      if (brnd() < p) { a.s++; a.w = 0; a.stall = null; a.moved = true; a.far = Math.max(a.far, a.s); if (brnd() < 0.05) ev.push(`${a.name}: ${STG[a.s - 1].exit.toLowerCase()} → ${STG[a.s].label}`); }
+      else if (a.w >= st.stall && a.stall == null) {
+        a.stall = a.tier === 'Mid-Market' ? 'With CSM' : a.s === 3 ? 'AI rescue sent' : 'Nudged';
+        if (a.s === 3 || brnd() < 0.15) ev.push(`${a.name} stalled at ${st.label} → ${a.stall}`);
+      }
+    }
+    if (a.cw >= 44 && a.s !== 7) { a.s = 7; a.w = 0; a.stall = null; a.moved = true; }
+    else if (a.s === 7 && a.w >= 8) {
+      const churnP = a.far >= 4 ? 0.08 : a.far === 3 ? 0.22 : 0.45, r = brnd();
+      const o = r < churnP ? 'Churned' : r < churnP + (a.far >= 5 ? 0.18 : 0.05) ? 'Expanded' : 'Renewed';
+      B.out[o]++; (B.byFar[a.far >= 4 ? 'M2 reached' : 'M2 not reached'] ||= { Renewed: 0, Expanded: 0, Churned: 0 })[o]++;
+      if (o !== 'Renewed' || brnd() < 0.3) ev.push(`${a.name} ${o.toLowerCase()} at renewal`);
+      a.s = o === 'Churned' ? -1 : 6; a.cw = 0; a.w = 0;
+    }
+  });
+  B.accts = B.accts.filter(a => a.s >= 0);
+  B.week++;
+  if (!quiet) B.log = ev.slice(0, 8).map(e => `<b>${fmtWk(dateOf(B.week))}</b> · ${e}`).concat(B.log).slice(0, 40);
+}
+const fmtWk = d => 'Week of ' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+for (let i = 0; i < 8; i++) tick(true);
+B.out = { Renewed: 0, Expanded: 0, Churned: 0 }; B.byFar = {};
+const SCOL = { null: 'var(--base)', 'AI rescue sent': 'var(--warn)', 'Nudged': 'var(--warn)', 'With CSM': 'var(--add)' };
+function renderBoard() {
+  const d = dateOf(B.week), [win] = WIN(d), A = B.accts.filter(a => B.filter === 'all' || a.tier === B.filter);
+  const med = arr => { if (!arr.length) return 0; const s = [...arr].sort((x, y) => x - y); return s[s.length >> 1]; };
+  const sel = STG[B.sel], inSel = A.filter(a => a.s === B.sel);
+  const totalOut = B.out.Renewed + B.out.Expanded + B.out.Churned;
+  document.getElementById('t-board').innerHTML = `
+    <div class="bctl"><span class="wk">${fmtWk(d)}</span><span class="pill p-mute">${win}</span><span class="spacer"></span>
+      <div class="pick" style="margin:0">${['all', 'Long tail', 'Mid-Market'].map(f => `<button data-f="${f}" class="${B.filter === f ? 'on' : ''}" style="padding:5px 10px">${f === 'all' ? 'All accounts' : f}</button>`).join('')}</div>
+      <button class="btn pri" id="bstep">Advance a week ▶</button><button class="btn" id="bplay">${B.timer ? 'Pause' : 'Play'}</button></div>
+    <div class="legend"><span><i style="background:var(--base)"></i>On pace</span><span><i style="background:var(--warn)"></i>Stalled → automated rescue or nudge</span><span><i style="background:var(--add)"></i>Mid-Market stall → with CSM</span><span><i style="background:var(--add-l);border:1px solid var(--add)"></i>Moved this week</span></div>
+    <div class="board">${STG.map((st, i) => { const c = A.filter(a => a.s === i).sort((x, y) => (y.moved ? 1 : 0) - (x.moved ? 1 : 0) || (y.stall ? 1 : 0) - (x.stall ? 1 : 0) || y.w - x.w);
+      return `<div class="col ${i === B.sel ? 'sel' : ''}"><div class="ch" data-s="${i}"><div class="t">${i + 1} · ${st.label}</div><div class="c">${c.length.toLocaleString()}</div><div class="m">${c.filter(a => a.stall).length} stalled · median ${med(c.map(a => a.w + 1))} wk here</div></div>
+        ${c.slice(0, 5).map(a => `<div class="acct ${a.moved ? 'moved' : ''}" style="border-left-color:${SCOL[a.stall]}"><div class="nm">${a.name}</div><div class="meta">${a.tier} · wk ${a.w + 1}${a.stall ? ' · ' + a.stall : ''}</div></div>`).join('')}
+        ${c.length > 5 ? `<div class="more">+ ${(c.length - 5).toLocaleString()} more</div>` : ''}</div>`; }).join('')}</div>
+    <div class="grid2" style="margin-top:12px">
+      <div class="card"><b>${B.sel + 1} · ${sel.label}</b> <span class="note">(click any column header)</span>
+        <p style="margin:6px 0;font-size:13.5px"><span class="note">Moves on when:</span> ${sel.exit}<br><span class="note">Automated:</span> ${sel.auto}<br><span class="note">Mid-Market:</span> ${sel.mm}</p>
+        <p style="margin:0;font-size:13.5px"><b>${inSel.length}</b> here now · <b>${inSel.filter(a => a.stall).length}</b> stalled · <b>${inSel.filter(a => a.moved).length}</b> arrived this week</p></div>
+      <div class="card"><b>Renewals since you started the clock</b>
+        <p style="margin:6px 0;font-size:13.5px">${totalOut ? `Renewed <b>${B.out.Renewed}</b> · Expanded <b>${B.out.Expanded}</b> · Churned <b>${B.out.Churned}</b>` : 'Advance a few weeks to see renewals come through.'}</p>
+        ${Object.keys(B.byFar).length ? `<table class="tbl" style="font-size:12.5px"><thead><tr><th>Furthest stage reached</th><th>Accounts</th><th>Churned</th><th>Renewed or expanded</th></tr></thead><tbody>${['M2 reached', 'M2 not reached'].filter(k => B.byFar[k]).map(k => { const o = B.byFar[k], n = o.Renewed + o.Expanded + o.Churned; return `<tr><td>${k}</td><td>${n}</td><td>${Math.round(100 * o.Churned / n)}%</td><td>${Math.round(100 * (o.Renewed + o.Expanded) / n)}%</td></tr>`; }).join('')}</tbody></table><p class="note" style="margin:6px 0 0">This gap is why Milestone 2 is the first program.</p>` : ''}</div>
+    </div>
+    <h3 style="margin-top:14px">This week's events</h3><div class="log">${B.log.join('') ? B.log.map(l => `<div>${l}</div>`).join('') : '<div>Press "Advance a week" to move the clock.</div>'}</div>
+    <p class="note">A simulated book of ~${B.accts.length.toLocaleString()} accounts, with about 18 new employers signing a week. Stage speed rises in recruiting windows and slows off-season. Fictional.</p>`;
+  const tb = document.getElementById('t-board');
+  tb.querySelector('#bstep').onclick = () => { tick(); renderBoard(); };
+  tb.querySelector('#bplay').onclick = () => { if (B.timer) { clearInterval(B.timer); B.timer = null; } else B.timer = setInterval(() => { tick(); renderBoard(); }, 1100); renderBoard(); };
+  tb.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { B.filter = b.dataset.f; renderBoard(); });
+  tb.querySelectorAll('.ch').forEach(h => h.onclick = () => { B.sel = +h.dataset.s; renderBoard(); });
+}
+renderBoard();
 </script>
 </body>
 </html>
