@@ -155,10 +155,10 @@ footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
     <thead><tr><th>Milestone step</th><th>Automated touch (base)</th><th>Season-aware pacing</th></tr></thead>
     <tbody>
       <tr><td>Signed → handoff</td><td>Welcome email with pre-work; Appcues setup checklist on first login</td><td>&gt; 8 weeks left: standard cadence · &lt; 8 weeks: "launch this week" track, checklist trimmed to what's needed to post</td></tr>
-      <tr><td>M1 · Getting started</td><td>Checklist: roles &amp; permissions, company profile, employer brand</td><td>Profile items deferred until after the first posting when the window is short</td></tr>
-      <tr><td>M2 · First posting</td><td>Template picker + posting quality check in-app; school-targeting suggestions</td><td>Nudge after 3 days without a posting (standard) or 1 day (short window)</td></tr>
-      <tr><td>M2 · Quality applicants</td><td><b>The AI posting rescue (Question 2)</b> when a live posting is under benchmark</td><td>Fires at day 7, or day 5 with &lt; 4 weeks left</td></tr>
-      <tr><td>M2 reached</td><td>"Your first applicants" email: who applied, what to do next; hands off to M3 promotions</td><td>—</td></tr>
+      <tr><td>Milestone 1 · Getting started</td><td>Checklist: roles &amp; permissions, company profile, employer brand</td><td>Profile items deferred until after the first posting when the window is short</td></tr>
+      <tr><td>Milestone 2 · First posting</td><td>Template picker + posting quality check in-app; school-targeting suggestions</td><td>Nudge after 3 days without a posting (standard) or 1 day (short window)</td></tr>
+      <tr><td>Milestone 2 · Quality applicants</td><td><b>The AI posting rescue (Question 2)</b> when a live posting is under benchmark</td><td>Fires at day 7, or day 5 with &lt; 4 weeks left</td></tr>
+      <tr><td>Milestone 2 reached</td><td>"Your first applicants" email: who applied, what to do next; hands off to Milestone 3 promotions</td><td>—</td></tr>
     </tbody></table></div>
 </section>
 
@@ -209,10 +209,10 @@ footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
   <p class="sub">Leading and lagging indicators, what we compare against, and the number that shuts it off, for the program and the workflow separately.</p>
   <div class="grid2">
     <div class="card"><h3 style="margin-top:0">The program (Question 1)</h3>
-      <p><b>Leading:</b> % of new employers reaching Milestone 2 before their window closes · median days signed → M2 · M1 checklist completion.</p>
+      <p><b>Leading:</b> % of new employers reaching Milestone 2 before their window closes · median days signed → Milestone 2 · Milestone 1 checklist completion.</p>
       <p><b>Lagging:</b> first-season results (applicants per posting, roles filled) · logo renewal and GRR for the long-tail cohort · NRR including expansion into promotions, AI Sourcing and Insights Pro <span class="pill p-warn">to validate</span>.</p>
       <p><b>Compared against:</b> a randomized 15% holdout of new long-tail employers who get today's lifecycle emails, <b>in the same season</b>, so seasonal swings can't fake a win.</p>
-      <p><b>Shut it off if:</b> after one full window, M2-before-close is not at least <b>5 points</b> above holdout; or unsubscribes exceed <b>0.5%</b> per send, or spam complaints <b>0.1%</b>.</p></div>
+      <p><b>Shut it off if:</b> after one full window, Milestone 2-before-close is not at least <b>5 points</b> above holdout; or unsubscribes exceed <b>0.5%</b> per send, or spam complaints <b>0.1%</b>.</p></div>
     <div class="card"><h3 style="margin-top:0">The AI workflow (Question 2)</h3>
       <p><b>Leading:</b> draft approval rate and how much people edit · fix applied within 7 days · applicants in the 7 days after, against flagged postings that got nothing · CSM minutes per rescue.</p>
       <p><b>Lagging:</b> postings reaching benchmark · roles filled · renewal of accounts that were rescued.</p>
@@ -262,11 +262,11 @@ footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
 <script>
 // ─── Tier matrix ────────────────────────────────────────────────────────────
 const M = [
-  ['Sales → CS handoff', ['base', 'Automated welcome + pre-work; Appcues setup checklist'], ['swap', 'CSM kickoff call (tested: +11 pts M1 completion, illustrative)']],
-  ['M1 · Getting started', ['base', 'Checklist: roles, profile, employer brand'], ['add', 'CSM reviews the company profile']],
-  ['M2 · Postings that drive quality applicants', ['base', 'Posting quality check + AI posting rescue, auto-sent once trusted'], ['add', 'CSM approves the AI draft before it sends']],
-  ['M3 · Promoting opportunities', ['base', 'Promotion and campaign nudges triggered by posting results'], ['add', 'CSM campaign planning before each window']],
-  ['M4 · Measuring success', ['base', 'Monthly results digest'], ['add', 'CSM walks through results at mid-season']],
+  ['Sales → CS handoff', ['base', 'Automated welcome + pre-work; Appcues setup checklist'], ['swap', 'CSM kickoff call (tested: +11 pts Milestone 1 completion, illustrative)']],
+  ['Milestone 1 · Getting started', ['base', 'Checklist: roles, profile, employer brand'], ['add', 'CSM reviews the company profile']],
+  ['Milestone 2 · Postings that drive quality applicants', ['base', 'Posting quality check + AI posting rescue, auto-sent once trusted'], ['add', 'CSM approves the AI draft before it sends']],
+  ['Milestone 3 · Promoting opportunities', ['base', 'Promotion and campaign nudges triggered by posting results'], ['add', 'CSM campaign planning before each window']],
+  ['Milestone 4 · Measuring success', ['base', 'Monthly results digest'], ['add', 'CSM walks through results at mid-season']],
   ['Midpoint review', ['base', 'Automated usage recap + "book time" link if metrics are off'], ['swap', 'CSM midpoint review (untested)']],
   ['Nov–Jan risk checkpoint', ['base', 'Fall results review; weak results trigger a spring plan email'], ['add', 'CSM call for accounts under benchmark']],
   ['Expand', ['base', 'Offers triggered by results: AI Sourcing when roles stay unfilled, Insights Pro when analytics use is heavy'], ['add', 'CSM flags to Account Management']],
@@ -354,8 +354,8 @@ function renderDash() {
   document.getElementById('t-dash').innerHTML = `
     <p class="sub">Fall window to date, program vs. holdout. All numbers fictional.</p>
     <div class="kpis">
-      <div class="kpi"><div class="l">M2 before window closes</div><div class="v">64%</div><div class="s">program · holdout 51% (+13 pts)</div></div>
-      <div class="kpi"><div class="l">Days signed → M2</div><div class="v">11</div><div class="s">median · holdout 19</div></div>
+      <div class="kpi"><div class="l">Milestone 2 before window closes</div><div class="v">64%</div><div class="s">program · holdout 51% (+13 pts)</div></div>
+      <div class="kpi"><div class="l">Days signed → Milestone 2</div><div class="v">11</div><div class="s">median · holdout 19</div></div>
       <div class="kpi"><div class="l">Rescued postings</div><div class="v">+9.8</div><div class="s">applicants in 7 days vs held-out postings</div></div>
       <div class="kpi"><div class="l">CSM minutes / rescue</div><div class="v">4</div><div class="s">Mid-Market approval · was 35 by hand</div></div>
     </div>
@@ -365,7 +365,7 @@ function renderDash() {
     </div>
     <h3>Shut-off monitor</h3>
     <div class="scroll"><table class="tbl"><thead><tr><th>Guardrail</th><th>Now</th><th>Shut-off</th><th>Status</th></tr></thead><tbody>
-      <tr><td>Program: M2-before-close lift over holdout</td><td>+13 pts</td><td>&lt; +5 pts after a full window</td><td><span class="pill p-add">healthy</span></td></tr>
+      <tr><td>Program: Milestone 2-before-close lift over holdout</td><td>+13 pts</td><td>&lt; +5 pts after a full window</td><td><span class="pill p-add">healthy</span></td></tr>
       <tr><td>Program: unsubscribes per send</td><td>0.21%</td><td>&gt; 0.5%</td><td><span class="pill p-add">healthy</span></td></tr>
       <tr><td>Program: spam complaints</td><td>0.04%</td><td>&gt; 0.1%</td><td><span class="pill p-add">healthy</span></td></tr>
       <tr><td>Workflow: factual errors sent without approval</td><td>0</td><td>any</td><td><span class="pill p-add">healthy</span></td></tr>
@@ -409,11 +409,11 @@ renderRun();
 // Renewal, and the outcome depends on how far it got. All fictional.
 const STG = [
   { k: 'handoff', label: 'Handoff', exit: 'Admin logs in', auto: 'Welcome + pre-work; login reminders day 2 and 5', mm: 'Swapped: CSM kickoff call', p: 0.7, stall: 2 },
-  { k: 'setup', label: 'M1 · Getting started', exit: 'Profile, roles and brand complete', auto: 'Appcues setup checklist', mm: 'Added: CSM profile review', p: 0.55, stall: 3 },
-  { k: 'post', label: 'M2 · First posting', exit: 'First posting live', auto: 'Template picker + quality check; nudge day 3', mm: 'Added: CSM check-in if no posting in a week', p: 0.5, stall: 2 },
-  { k: 'apps', label: 'M2 · Quality applicants', exit: 'A posting reaches benchmark applicants', auto: 'AI posting rescue when under benchmark', mm: 'Added: CSM approves the rescue draft', p: 0.4, stall: 2 },
-  { k: 'promo', label: 'M3 · Promoting', exit: 'First promotion or campaign sent', auto: 'Promotion nudges triggered by results', mm: 'Added: CSM campaign planning', p: 0.35, stall: 4 },
-  { k: 'measure', label: 'M4 · Measuring', exit: 'Opens results twice', auto: 'Monthly results digest', mm: 'Added: CSM results walkthrough', p: 0.45, stall: 4 },
+  { k: 'setup', label: 'Milestone 1 · Getting started', exit: 'Profile, roles and brand complete', auto: 'Appcues setup checklist', mm: 'Added: CSM profile review', p: 0.55, stall: 3 },
+  { k: 'post', label: 'Milestone 2 · First posting', exit: 'First posting live', auto: 'Template picker + quality check; nudge day 3', mm: 'Added: CSM check-in if no posting in a week', p: 0.5, stall: 2 },
+  { k: 'apps', label: 'Milestone 2 · Quality applicants', exit: 'A posting reaches benchmark applicants', auto: 'AI posting rescue when under benchmark', mm: 'Added: CSM approves the rescue draft', p: 0.4, stall: 2 },
+  { k: 'promo', label: 'Milestone 3 · Promoting', exit: 'First promotion or campaign sent', auto: 'Promotion nudges triggered by results', mm: 'Added: CSM campaign planning', p: 0.35, stall: 4 },
+  { k: 'measure', label: 'Milestone 4 · Measuring', exit: 'Opens results twice', auto: 'Monthly results digest', mm: 'Added: CSM results walkthrough', p: 0.45, stall: 4 },
   { k: 'season', label: 'In season', exit: 'Renewal window opens (60 days out)', auto: 'Window pushes; Nov–Jan results checkpoint', mm: 'Added: CSM checkpoint if under benchmark', p: 0, stall: 99 },
   { k: 'renew', label: 'Renewal', exit: 'Renewed, expanded or churned', auto: 'Season results recap + renewal link', mm: 'Added: CSM renewal review', p: 0, stall: 99 }
 ];
@@ -450,7 +450,7 @@ function tick(quiet) {
     else if (a.s === 7 && a.w >= 8) {
       const churnP = a.far >= 4 ? 0.08 : a.far === 3 ? 0.22 : 0.45, r = brnd();
       const o = r < churnP ? 'Churned' : r < churnP + (a.far >= 5 ? 0.18 : 0.05) ? 'Expanded' : 'Renewed';
-      B.out[o]++; (B.byFar[a.far >= 4 ? 'M2 reached' : 'M2 not reached'] ||= { Renewed: 0, Expanded: 0, Churned: 0 })[o]++;
+      B.out[o]++; (B.byFar[a.far >= 4 ? 'Milestone 2 reached' : 'Milestone 2 not reached'] ||= { Renewed: 0, Expanded: 0, Churned: 0 })[o]++;
       if (o !== 'Renewed' || brnd() < 0.3) ev.push(`${a.name} ${o.toLowerCase()} at renewal`);
       a.s = o === 'Churned' ? -1 : 6; a.cw = 0; a.w = 0;
     }
@@ -483,7 +483,7 @@ function renderBoard() {
         <p style="margin:0;font-size:13.5px"><b>${inSel.length}</b> here now · <b>${inSel.filter(a => a.stall).length}</b> stalled · <b>${inSel.filter(a => a.moved).length}</b> arrived this week</p></div>
       <div class="card"><b>Renewals since you started the clock</b>
         <p style="margin:6px 0;font-size:13.5px">${totalOut ? `Renewed <b>${B.out.Renewed}</b> · Expanded <b>${B.out.Expanded}</b> · Churned <b>${B.out.Churned}</b>` : 'Advance a few weeks to see renewals come through.'}</p>
-        ${Object.keys(B.byFar).length ? `<table class="tbl" style="font-size:12.5px"><thead><tr><th>Furthest stage reached</th><th>Accounts</th><th>Churned</th><th>Renewed or expanded</th></tr></thead><tbody>${['M2 reached', 'M2 not reached'].filter(k => B.byFar[k]).map(k => { const o = B.byFar[k], n = o.Renewed + o.Expanded + o.Churned; return `<tr><td>${k}</td><td>${n}</td><td>${Math.round(100 * o.Churned / n)}%</td><td>${Math.round(100 * (o.Renewed + o.Expanded) / n)}%</td></tr>`; }).join('')}</tbody></table><p class="note" style="margin:6px 0 0">This gap is why Milestone 2 is the first program.</p>` : ''}</div>
+        ${Object.keys(B.byFar).length ? `<table class="tbl" style="font-size:12.5px"><thead><tr><th>Furthest stage reached</th><th>Accounts</th><th>Churned</th><th>Renewed or expanded</th></tr></thead><tbody>${['Milestone 2 reached', 'Milestone 2 not reached'].filter(k => B.byFar[k]).map(k => { const o = B.byFar[k], n = o.Renewed + o.Expanded + o.Churned; return `<tr><td>${k}</td><td>${n}</td><td>${Math.round(100 * o.Churned / n)}%</td><td>${Math.round(100 * (o.Renewed + o.Expanded) / n)}%</td></tr>`; }).join('')}</tbody></table><p class="note" style="margin:6px 0 0">This gap is why Milestone 2 is the first program.</p>` : ''}</div>
     </div>
     <h3 style="margin-top:14px">This week's events</h3><div class="log">${B.log.join('') ? B.log.map(l => `<div>${l}</div>`).join('') : '<div>Press "Advance a week" to move the clock.</div>'}</div>
     <p class="note">A simulated book of ~${B.accts.length.toLocaleString()} accounts, with about 18 new employers signing a week. Stage speed rises in recruiting windows and slows off-season. Fictional.</p>`;
