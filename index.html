@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bottom-Up Employer Journey</title>
+<meta name="description" content="Part 2: a bottom-up, season-aware digital CS journey for employers, with a step-level AI workflow and how we'd know it worked.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#F7F6F2;--surface:#fff;--surface2:#F0EEE8;--ink:#1B1A17;--ink2:#55534D;--ink3:#8E8B84;--line:rgba(27,26,23,.12);
+--base:#2F6FDB;--base-l:#E8F0FD;--add:#138A62;--add-l:#E3F4EC;--swap:#B4561E;--swap-l:#FBEDE3;--warn:#A06A00;--warn-l:#FFF4DB;--bad:#B3261E;--bad-l:#FBE7E5;--r:12px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15161A;--surface:#1D1F24;--surface2:#262930;--ink:#EDEBE6;--ink2:#B7B4AD;--ink3:#86837C;--line:rgba(237,235,230,.14);
+--base:#6EA0F5;--base-l:#1E2A40;--add:#4CC592;--add-l:#16322A;--swap:#EE9763;--swap-l:#3A2519;--warn:#E6B54A;--warn-l:#3A2F14;--bad:#F08A82;--bad-l:#3D1E1C}}
+:root[data-theme="dark"]{--bg:#15161A;--surface:#1D1F24;--surface2:#262930;--ink:#EDEBE6;--ink2:#B7B4AD;--ink3:#86837C;--line:rgba(237,235,230,.14);
+--base:#6EA0F5;--base-l:#1E2A40;--add:#4CC592;--add-l:#16322A;--swap:#EE9763;--swap-l:#3A2519;--warn:#E6B54A;--warn-l:#3A2F14;--bad:#F08A82;--bad-l:#3D1E1C}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 Inter,system-ui,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;gap:16px;align-items:center;height:52px;overflow-x:auto;white-space:nowrap}
+header.top b{font-weight:700}header.top a{color:var(--ink2);text-decoration:none;font-size:13px}header.top a:hover{color:var(--ink)}
+.hero{padding:56px 0 28px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+h1{font-family:Fraunces,serif;font-size:clamp(30px,5vw,46px);line-height:1.1;margin:10px 0 14px;font-weight:600}
+h2{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;font-weight:600}
+h3{font-size:16px;margin:22px 0 8px}
+.lede{font-size:18px;color:var(--ink2);max-width:760px}
+section{padding:40px 0;border-top:1px solid var(--line)}
+.sub{color:var(--ink2);margin:0 0 18px;max-width:780px}
+.note{font-size:12.5px;color:var(--ink3)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:760px){.grid2,.grid3{grid-template-columns:1fr}}
+.pill{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 9px;border-radius:99px;white-space:nowrap}
+.p-base{background:var(--base-l);color:var(--base)}.p-add{background:var(--add-l);color:var(--add)}.p-swap{background:var(--swap-l);color:var(--swap)}
+.p-warn{background:var(--warn-l);color:var(--warn)}.p-bad{background:var(--bad-l);color:var(--bad)}.p-mute{background:var(--surface2);color:var(--ink2)}
+.assume{border-left:3px solid var(--warn);background:var(--warn-l);color:var(--ink);padding:10px 14px;border-radius:6px;font-size:13.5px;margin:14px 0}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{text-align:left;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);padding:10px 12px;border-bottom:1px solid var(--line);background:var(--surface2);white-space:nowrap}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl tr:last-child td{border-bottom:none}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.cell .pill{margin-bottom:4px}.cell div{font-size:13px}
+.qhead{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}.qnum{font-family:Fraunces,serif;font-size:15px;color:var(--ink3)}
+.steps{counter-reset:s;display:grid;gap:10px}
+.step{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.step .n{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+.step h4{margin:4px 0 4px;font-size:15px}.step p{margin:4px 0;color:var(--ink2);font-size:14px}
+.who{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.ladder{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}@media (max-width:760px){.ladder{grid-template-columns:1fr}}
+.ladder .card h4{margin:0 0 6px;font-size:14px}.ladder .card p{margin:0;font-size:13px;color:var(--ink2)}
+.season{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}@media (max-width:760px){.season{grid-template-columns:1fr}}
+.flow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0 4px}
+.flow .card{padding:10px 14px;font-size:13.5px}.flow .arr{color:var(--ink3)}
+/* prototype */
+.proto{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tab{border:1px solid var(--line);background:var(--surface2);color:var(--ink2);padding:7px 14px;border-radius:99px;font:inherit;font-size:13px;cursor:pointer}
+.tab.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.pick{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.pick button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:8px 12px;font:inherit;font-size:13px;cursor:pointer;text-align:left}
+.pick button.on{outline:2px solid var(--base);border-color:transparent}
+.run{display:grid;gap:10px}
+.run .card{padding:14px 16px}.run h4{margin:0 0 6px;font-size:14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.src{font-size:11px;padding:1px 7px;border-radius:5px;background:var(--surface2);color:var(--ink2);font-weight:600;white-space:nowrap}
+.mail{border:1px dashed var(--line);border-radius:10px;padding:12px 14px;background:var(--bg);font-size:13.5px;white-space:pre-wrap}
+.ok{color:var(--add);font-weight:700}.no{color:var(--bad);font-weight:700}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:5px 10px;font:inherit;font-size:12.5px;cursor:pointer}
+.btn.pri{background:var(--add);color:#fff;border-color:transparent}.btn:disabled{opacity:.45;cursor:default}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}@media (max-width:760px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi{background:var(--surface2);border-radius:10px;padding:12px 14px}.kpi .l{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3)}
+.kpi .v{font-size:24px;font-weight:700;line-height:1.2}.kpi .s{font-size:12px;color:var(--ink2)}
+.chartbox{position:relative;height:260px}
+.meter{height:8px;border-radius:4px;background:var(--surface2);overflow:hidden;margin-top:6px}.meter i{display:block;height:100%}
+footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
+.hide{display:none}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><b>Part 2</b><a href="#thesis">Thesis</a><a href="#lifecycle">Lifecycle</a><a href="#q1">1 · Program</a><a href="#q2">2 · AI workflow</a><a href="#q3">3 · Measurement</a><a href="#proto">Prototype</a><a href="#assume">Assumptions</a><a href="#ai">How I used AI</a></div></header>
+
+<div class="wrap">
+<div class="hero">
+  <div class="eyebrow">Manager, Scaled Customer Success · Part 2: what I'd build here</div>
+  <h1>Build the employer journey from the bottom up</h1>
+  <p class="lede">Design the fully automated journey for the lowest-ARR employers first. Then carry it up every tier, adding human touches, or swapping them in where testing shows a person wins. Gainsight and Appcues stay as the delivery layer; AI sits in the decision layer between them.</p>
+  <div class="assume"><b>How to read this page.</b> Everything about Handshake's internals (data, metrics, tooling setup) is an assumption from public materials and the brief, marked <span class="pill p-warn">to validate</span>. Every number in the prototype is fictional.</div>
+</div>
+
+<section id="thesis">
+  <h2>The thesis</h2>
+  <p class="sub">Most journeys are designed top-down: the white-glove enterprise motion, then stripped down for the long tail. I'd do the reverse.</p>
+  <div class="grid3">
+    <div class="card"><span class="pill p-base">Base</span><h3 style="margin-top:8px">One automated journey</h3><p class="note" style="font-size:14px;color:var(--ink2)">Built for the long tail first: every milestone has an automated touch (Gainsight Journey Orchestrator email, Appcues in-app) and a self-serve path.</p></div>
+    <div class="card"><span class="pill p-add">Added</span><h3 style="margin-top:8px">Human touches layered on</h3><p class="note" style="font-size:14px;color:var(--ink2)">Mid-Market and Enterprise get the same base, plus human touches where a person's time is worth it.</p></div>
+    <div class="card"><span class="pill p-swap">Swapped</span><h3 style="margin-top:8px">Or swapped, when tested</h3><p class="note" style="font-size:14px;color:var(--ink2)">Where a test shows a human touch beats the automated one for a tier, the outreach is swapped. The self-serve tool behind it never goes away.</p></div>
+  </div>
+  <h3>Why this way round</h3>
+  <div class="grid2">
+    <div class="card"><b>Every customer can self-serve.</b> A Tier 1 recruiter who wants to fix a posting at 11pm can, because the base exists for everyone.</div>
+    <div class="card"><b>Tiers become explicit decisions.</b> Each human touch is a deliberate "this is worth a person" call, testable against the base, not a default nobody questions.</div>
+  </div>
+  <p class="note">How swaps are decided: split a tier's accounts, half get the automated touch, half the human one; compare on the milestone the touch is meant to move; keep the winner.</p>
+</section>
+
+<section id="lifecycle">
+  <h2>The employer lifecycle</h2>
+  <p class="sub">Three stages. Onboarding follows Handshake's four implementation milestones <span class="pill p-warn">to validate</span>; after that, the journey follows the recruiting calendar, not the contract calendar.</p>
+  <div class="flow"><div class="card"><b>1 · Onboard</b><br><span class="note">4 implementation milestones</span></div><span class="arr">→</span><div class="card"><b>2 · Season loop</b><br><span class="note">repeats every recruiting year</span></div><span class="arr">→</span><div class="card"><b>3 · Expand</b><br><span class="note">triggered by results</span></div></div>
+  <div class="season" style="margin:14px 0">
+    <div class="card"><span class="pill p-mute">Aug – Oct</span><h3 style="margin:8px 0 4px">High-volume window</h3><p class="note" style="font-size:13.5px;color:var(--ink2)">Postings and campaigns for internships, rotational programs, events. Journey goal: Milestone 2 hit early in the window.</p></div>
+    <div class="card"><span class="pill p-warn">Nov – Jan · risk checkpoint</span><h3 style="margin:8px 0 4px">Mid-season review</h3><p class="note" style="font-size:13.5px;color:var(--ink2)">Automated results review; weak fall results flag renewal risk while there's still a spring to save.</p></div>
+    <div class="card"><span class="pill p-mute">Feb – Apr</span><h3 style="margin:8px 0 4px">Spring window</h3><p class="note" style="font-size:13.5px;color:var(--ink2)">Reactivation for immediate-hire roles and remaining internship slots.</p></div>
+  </div>
+  <h3>The tier matrix</h3>
+  <p class="sub" style="margin-bottom:10px">Rows are the journey; the long-tail column is the base every other column starts from.</p>
+  <div class="scroll"><table class="tbl" id="matrix"></table></div>
+  <p class="note">Legend: <span class="pill p-base">Base</span> automated, available to every tier · <span class="pill p-add">Added</span> human touch on top of the base · <span class="pill p-swap">Swapped</span> automated outreach replaced by a person (self-serve stays). Swaps marked "tested" show an illustrative result.</p>
+</section>
+
+<section id="q1">
+  <div class="qhead"><span class="qnum">Question 1</span><h2>First program: Milestone 2 on autopilot, paced by the season</h2></div>
+  <p class="sub">One digital engagement program to prioritize first: what it is, what problem it solves, and why it's first.</p>
+  <div class="grid3">
+    <div class="card"><div class="who" style="color:var(--base)">What it is</div><p>An automated program that gets every new long-tail employer from signed to <b>a live posting that is drawing quality applicants</b> (Handshake's Milestone 2) before their current recruiting window closes. Delivered through Gainsight JO emails and Appcues guides on the posting pages; paced by how many weeks are left in the window.</p></div>
+    <div class="card"><div class="who" style="color:var(--swap)">The problem it solves</div><p>A low-ARR employer whose first posting quietly underperforms has no CSM to notice. They conclude "Handshake doesn't work for us", and we find out at renewal, a season too late. Today's lifecycle emails are calendar-based, so they can't tell a thriving posting from a dead one.</p></div>
+    <div class="card"><div class="who" style="color:var(--add)">Why it's first</div><p>1) Quality applicants is the value an employer pays for, so it's the milestone closest to revenue. 2) Everything after it (promotions, measuring, renewal, expansion) depends on it. 3) It's the long tail, where bottom-up starts. 4) The season is a hard clock: a week lost in October can't be bought back in March. 5) It runs on data that already exists: postings and applicants <span class="pill p-warn">to validate</span>.</p></div>
+  </div>
+  <h3>How the program runs</h3>
+  <div class="scroll"><table class="tbl">
+    <thead><tr><th>Milestone step</th><th>Automated touch (base)</th><th>Season-aware pacing</th></tr></thead>
+    <tbody>
+      <tr><td>Signed → handoff</td><td>Welcome email with pre-work; Appcues setup checklist on first login</td><td>&gt; 8 weeks left: standard cadence · &lt; 8 weeks: "launch this week" track, checklist trimmed to what's needed to post</td></tr>
+      <tr><td>M1 · Getting started</td><td>Checklist: roles &amp; permissions, company profile, employer brand</td><td>Profile items deferred until after the first posting when the window is short</td></tr>
+      <tr><td>M2 · First posting</td><td>Template picker + posting quality check in-app; school-targeting suggestions</td><td>Nudge after 3 days without a posting (standard) or 1 day (short window)</td></tr>
+      <tr><td>M2 · Quality applicants</td><td><b>The AI posting rescue (Question 2)</b> when a live posting is under benchmark</td><td>Fires at day 7, or day 5 with &lt; 4 weeks left</td></tr>
+      <tr><td>M2 reached</td><td>"Your first applicants" email: who applied, what to do next; hands off to M3 promotions</td><td>—</td></tr>
+    </tbody></table></div>
+</section>
+
+<section id="q2">
+  <div class="qhead"><span class="qnum">Question 2</span><h2>AI workflow: the underperforming-posting rescue</h2></div>
+  <p class="sub">Specified at step level. It serves Milestone 2 for every tier; only where the human sits changes.</p>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><div><h4>Trigger, and what fires it</h4>
+      <p><b>Condition:</b> a posting has been live 7 days (5 if under 4 weeks remain in the window) with applicants below <b>50% of the benchmark</b> for comparable postings: same role family, location type, and school targeting.</p>
+      <p><b>What fires it:</b> a nightly job over product data computes each live posting's applicants against its benchmark and writes a signal to Gainsight, which opens the workflow. <b>Suppressed if:</b> the posting fired in the last 14 days, the posting is closed, or the account already has an open CSM task.</p></div></div>
+    <div class="step"><div class="n">2</div><div><h4>Gather inputs, and where each comes from</h4>
+      <div class="scroll" style="margin-top:6px"><table class="tbl">
+        <thead><tr><th>Input</th><th>Source</th><th>Why it's needed</th></tr></thead>
+        <tbody>
+          <tr><td>Posting fields: title, pay, location, schools targeted, description, template used</td><td><span class="src">Handshake product data</span></td><td>What we're diagnosing</td></tr>
+          <tr><td>Views → applies funnel for this posting</td><td><span class="src">Product analytics</span></td><td>Tells a visibility problem from a conversion problem</td></tr>
+          <tr><td>Benchmark: comparable postings that hit target, and what they had in common</td><td><span class="src">Data warehouse</span></td><td>Grounds every suggestion in evidence</td></tr>
+          <tr><td>Tier, ARR, renewal date, health score, CSM, prior touches</td><td><span class="src">Gainsight</span></td><td>Routing and tone; no repeat of an ignored suggestion</td></tr>
+          <tr><td>In-app guide history: seen, dismissed, completed</td><td><span class="src">Appcues</span></td><td>Don't re-show what they dismissed</td></tr>
+          <tr><td>Call summaries, if any (usually none in the long tail)</td><td><span class="src">Gong</span></td><td>Context: hiring plans, stated goals</td></tr>
+          <tr><td>Posting best-practice playbooks and help articles</td><td><span class="src">Glean</span></td><td>The fix links to Handshake's own guidance</td></tr>
+          <tr><td>Season calendar: days left in the current window</td><td><span class="src">Config</span></td><td>Urgency and pacing</td></tr>
+        </tbody></table></div></div></div>
+    <div class="step"><div class="n">3</div><div><h4>Diagnose <span class="pill p-base">system decides</span></h4><p>An LLM (Claude or ChatGPT, whichever wins our evaluation set) compares the posting with the benchmark and returns a structured result: up to three likely causes, each tied to a specific field and the benchmark evidence, plus a confidence score. Numbers are passed in from the data, never generated.</p></div></div>
+    <div class="step"><div class="n">4</div><div><h4>Draft the fix <span class="pill p-base">system decides</span></h4><p>The specific edits (e.g. "add a pay range", "add these 6 schools that fill similar roles"), an email from the account's owner (the scaled CS team in the long tail, the named CSM above it), and an Appcues guide on the posting's edit page that walks through the same edits with one click to apply.</p></div></div>
+    <div class="step"><div class="n">5</div><div><h4>Automated checks <span class="pill p-base">system decides</span></h4><p>Every number in the draft matches an input; no promises of outcomes; links resolve; tone and brand rules pass; confidence is above threshold. Any failure routes the draft to a person instead of sending.</p></div></div>
+    <div class="step"><div class="n">6</div><div><h4>Route by tier <span class="pill p-swap">the human line</span></h4>
+      <div class="scroll" style="margin-top:6px"><table class="tbl"><thead><tr><th>Tier</th><th>At launch</th><th>Why the line is there</th></tr></thead><tbody>
+        <tr><td>Long tail</td><td>A person approves every draft (Phase 1), then a sample (Phase 2+)</td><td>Until we've measured accuracy, one wrong diagnosis at scale is thousands of wrong emails</td></tr>
+        <tr><td>Mid-Market</td><td>The account's CSM approves or edits in a Gainsight task; 1-business-day deadline, then it falls back to the base email</td><td>A revenue-bearing relationship: the CSM owns what the customer hears</td></tr>
+        <tr><td>Enterprise</td><td>The CSM delivers the fix personally; AI output is a prep brief</td><td>Highest ARR, multi-team accounts: the diagnosis is input to a conversation, not a message</td></tr>
+        <tr><td>Any tier, renewal within 90 days</td><td>Always a person</td><td>A wrong message during renewal costs more than a slow one</td></tr>
+      </tbody></table></div></div></div>
+    <div class="step"><div class="n">7</div><div><h4>Send, then learn <span class="pill p-base">system</span></h4><p>Sent via Gainsight JO and Appcues. Seven days later the workflow records whether the fix was applied and what applicants did, and adds the case to the evaluation set that the diagnosis step is re-tested against.</p></div></div>
+  </div>
+
+  <h3>What I'd let it do on its own once trusted, and what has to be true first</h3>
+  <div class="ladder">
+    <div class="card"><span class="pill p-mute">Phase 0 · shadow</span><h4 style="margin-top:8px">AI drafts, people send their own</h4><p>Compare AI diagnoses with what CSMs would have said. Builds the evaluation set.</p></div>
+    <div class="card"><span class="pill p-add">Phase 1</span><h4 style="margin-top:8px">A person approves every draft</h4><p>Entry: AI matches the CSM diagnosis on 85%+ of 200 shadow cases.</p></div>
+    <div class="card"><span class="pill p-base">Phase 2</span><h4 style="margin-top:8px">Long tail sends on its own</h4><p>Entry: 95%+ approved with light or no edits over 4 weeks; zero factual errors in audit; lift over holdout. A 10% weekly sample is still audited.</p></div>
+    <div class="card"><span class="pill p-warn">Phase 3</span><h4 style="margin-top:8px">Pre-fills the fix in the posting</h4><p>The customer still clicks "apply"; we never edit a posting without consent. Entry: Phase 2 stable for a full season; legal and brand sign-off.</p></div>
+  </div>
+  <p class="note">Mid-Market and Enterprise stay human-in-the-loop by design (the tier choice), not because the AI isn't trusted.</p>
+</section>
+
+<section id="q3">
+  <div class="qhead"><span class="qnum">Question 3</span><h2>How we'd know either one worked</h2></div>
+  <p class="sub">Leading and lagging indicators, what we compare against, and the number that shuts it off, for the program and the workflow separately.</p>
+  <div class="grid2">
+    <div class="card"><h3 style="margin-top:0">The program (Question 1)</h3>
+      <p><b>Leading:</b> % of new employers reaching Milestone 2 before their window closes · median days signed → M2 · M1 checklist completion.</p>
+      <p><b>Lagging:</b> first-season results (applicants per posting, roles filled) · logo renewal and GRR for the long-tail cohort · NRR including expansion into promotions, AI Sourcing and Insights Pro <span class="pill p-warn">to validate</span>.</p>
+      <p><b>Compared against:</b> a randomized 15% holdout of new long-tail employers who get today's lifecycle emails, <b>in the same season</b>, so seasonal swings can't fake a win.</p>
+      <p><b>Shut it off if:</b> after one full window, M2-before-close is not at least <b>5 points</b> above holdout; or unsubscribes exceed <b>0.5%</b> per send, or spam complaints <b>0.1%</b>.</p></div>
+    <div class="card"><h3 style="margin-top:0">The AI workflow (Question 2)</h3>
+      <p><b>Leading:</b> draft approval rate and how much people edit · fix applied within 7 days · applicants in the 7 days after, against flagged postings that got nothing · CSM minutes per rescue.</p>
+      <p><b>Lagging:</b> postings reaching benchmark · roles filled · renewal of accounts that were rescued.</p>
+      <p><b>Compared against:</b> 20% of flagged postings randomly held out (no rescue), measured over the same weeks.</p>
+      <p><b>Shut it off if:</b> <b>any</b> factual error goes out without approval (auto-send pauses immediately) · approval rate under <b>80%</b> for 2 weeks (back to Phase 1) · no lift over holdout after <b>4 weeks</b> (off).</p></div>
+  </div>
+  <p class="note">Team efficiency, from the job description: accounts per CSM, CSM hours per account, and the self-serve rate in upper tiers (issues solved through the base without the CSM). All thresholds are starting points to calibrate, not facts about Handshake.</p>
+</section>
+
+<section id="proto">
+  <h2>Working prototype</h2>
+  <p class="sub">The workflow running on example postings, the approval queue, and the measurement dashboard. Fictional employers and numbers; the logic is the design above.</p>
+  <div class="proto">
+    <div class="tabs"><button class="tab on" data-t="run">Posting rescue</button><button class="tab" data-t="queue">Approval queue</button><button class="tab" data-t="dash">Dashboard</button></div>
+    <div id="t-run"><div class="pick" id="pick"></div><div class="run" id="runout"></div></div>
+    <div id="t-queue" class="hide"></div>
+    <div id="t-dash" class="hide"></div>
+  </div>
+</section>
+
+<section id="assume">
+  <h2>Assumptions and open questions</h2>
+  <p class="sub">What I'd validate in the first 30 days, and the questions I'd bring to the panel.</p>
+  <div class="grid2">
+    <div class="card"><h3 style="margin-top:0">From public materials, to validate</h3><ul style="margin:0;padding-left:18px;color:var(--ink2);font-size:14px">
+      <li>The four implementation milestones and their names</li>
+      <li>Recruiting windows (Aug–Oct, Nov–Jan, Feb–Apr) and how seasonal employer usage really is</li>
+      <li>Product names: Campaigns, Promotions, Hiring Intelligence / AI Sourcing, Insights Pro, and which are paid</li>
+      <li>Whether posting and applicant data can reach Gainsight nightly</li></ul></div>
+    <div class="card"><h3 style="margin-top:0">Questions for the panel</h3><ul style="margin:0;padding-left:18px;color:var(--ink2);font-size:14px">
+      <li>The role manages three Mid-Market CSMs and leads the tech-touch strategy: does the digital motion cover the long tail only, or every tier?</li>
+      <li>How are tiers cut today: ARR, employer size, or something else?</li>
+      <li>Is Gainsight Journey Orchestrator the email engine, or is that in a marketing tool?</li>
+      <li>What does "quality applicant" mean internally, and is it measured?</li></ul></div>
+  </div>
+</section>
+
+<section id="ai">
+  <h2>How I used AI to build this</h2>
+  <p class="sub">The brief asks; here's the honest version.</p>
+  <div class="card"><p style="margin-top:0">I workshopped the design with Claude over a working session: I brought the thesis (bottom-up journeys, swap-by-test), the priorities, and the corrections; Claude drafted, challenged, and built. Claude Code wrote this page and the prototype, and flagged every claim about Handshake it couldn't verify. That's why the yellow tags are there. The same approach built Part 1's dashboard.</p></div>
+</section>
+</div>
+<footer><div class="wrap">Prepared for the Manager, Scaled Customer Success panel · all prototype data is fictional · Handshake specifics marked "to validate" come from public materials.</div></footer>
+
+<script>
+// ─── Tier matrix ────────────────────────────────────────────────────────────
+const M = [
+  ['Sales → CS handoff', ['base', 'Automated welcome + pre-work; Appcues setup checklist'], ['swap', 'CSM kickoff call (tested: +11 pts M1 completion, illustrative)'], ['swap', 'CSM kickoff call + multi-team rollout plan']],
+  ['M1 · Getting started', ['base', 'Checklist: roles, profile, employer brand'], ['add', 'CSM reviews the company profile'], ['add', 'Admin training session']],
+  ['M2 · Postings that drive quality applicants', ['base', 'Posting quality check + AI posting rescue, auto-sent once trusted'], ['add', 'CSM approves the AI draft before it sends'], ['swap', 'CSM delivers the fix; AI output is the prep brief']],
+  ['M3 · Promoting opportunities', ['base', 'Promotion and campaign nudges triggered by posting results'], ['add', 'CSM campaign planning before each window'], ['add', 'Seasonal recruiting strategy session']],
+  ['M4 · Measuring success', ['base', 'Monthly results digest'], ['add', 'CSM walks through results at mid-season'], ['add', 'Quarterly business review']],
+  ['Midpoint review', ['base', 'Automated usage recap + "book time" link if metrics are off'], ['swap', 'CSM midpoint review (untested)'], ['swap', 'CSM midpoint review + exec sponsor']],
+  ['Nov–Jan risk checkpoint', ['base', 'Fall results review; weak results trigger a spring plan email'], ['add', 'CSM call for accounts under benchmark'], ['add', 'Save plan with the account team']],
+  ['Expand', ['base', 'Offers triggered by results: AI Sourcing when roles stay unfilled, Insights Pro when analytics use is heavy'], ['add', 'CSM flags to Account Management'], ['add', 'Account team leads the expansion']],
+  ['Renewal', ['base', 'Season results recap + renewal link, 60 days out'], ['add', 'CSM-led renewal review'], ['add', 'Executive business review']]
+];
+const PL = { base: ['p-base', 'Base'], add: ['p-add', 'Added'], swap: ['p-swap', 'Swapped'] };
+document.getElementById('matrix').innerHTML = '<thead><tr><th>Journey step</th><th>Long tail (the base)</th><th>Mid-Market</th><th>Enterprise</th></tr></thead><tbody>' +
+  M.map(r => '<tr><td><b>' + r[0] + '</b></td>' + r.slice(1).map(([k, t]) => `<td class="cell"><span class="pill ${PL[k][0]}">${PL[k][1]}</span><div>${t}</div></td>`).join('') + '</tr>').join('') + '</tbody>';
+
+// ─── Prototype: posting rescue ──────────────────────────────────────────────
+const POSTS = [
+  { id: 'a', emp: 'Brightpath Logistics', tier: 'Long tail', arr: '$4.2k', renew: 210, csm: 'Scaled CS team', title: 'Operations Analyst Intern', days: 7, weeks: 6, apps: 9, bench: 38, views: 410, pay: null, schools: 4, benchSchools: 12, desc: 180, benchDesc: 420, gong: null,
+    causes: [['No pay range listed', 'pay', '87% of benchmark postings list pay; postings with pay get 2.1× the applies'], ['Targeting only 4 schools', 'schools', 'Comparable postings that hit target reach a median of 12 schools'], ['Short description (180 words)', 'desc', 'Benchmark median is 420 words, with a "what you\'ll learn" section']], conf: 0.91 },
+  { id: 'b', emp: 'Cedarline Health', tier: 'Mid-Market', arr: '$38k', renew: 140, csm: 'Naomi Park', title: 'Patient Experience Associate', days: 7, weeks: 3, apps: 14, bench: 44, views: 1210, pay: '$21–24/hr', schools: 15, benchSchools: 14, desc: 520, benchDesc: 450, gong: 'Kickoff call: wants 10 hires before May; worried about applicant quality',
+    causes: [['Views are fine, applies are low: the apply step asks for 3 documents', 'apply', 'Benchmark postings ask for a résumé only; 2 extra uploads cut completion by ~60%'], ['Title reads senior for early talent', 'title', 'Similar postings that fill use "Associate (Entry-level)"']], conf: 0.84 },
+  { id: 'c', emp: 'Orion Freight Systems', tier: 'Enterprise', arr: '$210k', renew: 45, csm: 'Devin Walsh', title: 'Rotational Engineering Program', days: 9, weeks: 5, apps: 31, bench: 120, views: 2900, pay: '$78k', schools: 30, benchSchools: 26, desc: 610, benchDesc: 500, gong: 'QBR: new VP of Talent reviewing all vendors this spring',
+    causes: [['Posted in the wrong location type (on-site only; benchmark programs offer relocation)', 'loc', 'Rotational programs that hit target mention relocation support in 78% of cases']], conf: 0.72 }
+];
+let cur = POSTS[0];
+const src = s => `<span class="src">${s}</span>`;
+function route(p) {
+  if (p.renew <= 90) return ['A person, always', 'Renewal is ' + p.renew + ' days out: a wrong message during renewal costs more than a slow one.', 'p-warn'];
+  if (p.tier === 'Long tail') return ['Today: a person approves (Phase 1)', 'Long tail, checks passed, confidence ' + p.conf + '. Once the Phase 2 gates are met (see Approval queue), this sends on its own and enters the 10% audit sample at random.', 'p-base'];
+  if (p.tier === 'Mid-Market') return ['CSM approval: ' + p.csm, 'Gainsight task, 1-business-day deadline, then falls back to the base email.', 'p-add'];
+  return ['CSM delivers: ' + p.csm, 'AI output becomes a prep brief; the CSM makes the call.', 'p-swap'];
+}
+function renderRun() {
+  document.getElementById('pick').innerHTML = POSTS.map(p => `<button class="${p === cur ? 'on' : ''}" data-id="${p.id}"><b>${p.emp}</b><br><span class="note">${p.tier} · ${p.title}</span></button>`).join('');
+  document.querySelectorAll('#pick button').forEach(b => b.onclick = () => { cur = POSTS.find(p => p.id === b.dataset.id); renderRun(); });
+  const p = cur, fired = p.apps < p.bench * 0.5 && p.days >= (p.weeks < 4 ? 5 : 7), [who, why, cls] = route(p);
+  const draft = p.tier === 'Enterprise'
+    ? `Prep brief for ${p.csm}\n\n${p.title}: ${p.apps} applicants in ${p.days} days vs a benchmark of ${p.bench}.\nLikely cause: ${p.causes[0][0].toLowerCase()}.\nEvidence: ${p.causes[0][2]}.\nContext: ${p.gong}.\nSuggested talk track: lead with the fix, then the spring plan.`
+    : `Subject: A quick fix for your ${p.title} posting\n\nHi — your ${p.title} posting has ${p.apps} applicants after ${p.days} days. Similar postings at this point have around ${p.bench}.\n\n${p.causes.map((c, i) => `${i + 1}. ${c[0]}. ${c[2]}.`).join('\n')}\n\nThe edit page has a guide that walks through these in about two minutes. There are ${p.weeks} weeks left in this recruiting window.\n\n— ${p.tier === 'Long tail' ? 'The Handshake Customer Success team' : p.csm}`;
+  const nums = [p.apps, p.bench, p.days, p.weeks], okNums = nums.every(n => draft.includes(String(n)));
+  document.getElementById('runout').innerHTML = `
+    <div class="card"><h4><span class="pill p-mute">Step 1</span> Trigger ${fired ? '<span class="ok">fired</span>' : '<span class="no">not fired</span>'}</h4>
+      ${p.apps} applicants after ${p.days} days vs benchmark ${p.bench} (${Math.round(100 * p.apps / p.bench)}%; threshold 50%). ${p.weeks} weeks left in the window, so it fires at day ${p.weeks < 4 ? 5 : 7}. No open CSM task; not fired in the last 14 days.</div>
+    <div class="card"><h4><span class="pill p-mute">Step 2</span> Inputs gathered</h4>
+      <div class="scroll"><table class="tbl"><tbody>
+        <tr><td>Posting: pay ${p.pay || '<b>none</b>'} · ${p.schools} schools · ${p.desc}-word description</td><td>${src('Product data')}</td></tr>
+        <tr><td>Funnel: ${p.views.toLocaleString()} views → ${p.apps} applies (${(100 * p.apps / p.views).toFixed(1)}%)</td><td>${src('Product analytics')}</td></tr>
+        <tr><td>Benchmark: ${p.bench} applicants · ${p.benchSchools} schools · ${p.benchDesc}-word description</td><td>${src('Data warehouse')}</td></tr>
+        <tr><td>${p.tier} · ARR ${p.arr} · renewal in ${p.renew} days · owner ${p.csm}</td><td>${src('Gainsight')}</td></tr>
+        <tr><td>${p.gong || 'No calls on record'}</td><td>${src('Gong')}</td></tr>
+        <tr><td>Playbook: "Writing postings early talent applies to"</td><td>${src('Glean')}</td></tr>
+      </tbody></table></div></div>
+    <div class="card"><h4><span class="pill p-mute">Step 3</span> Diagnosis <span class="pill p-base">system decides</span> <span class="note">confidence ${p.conf}</span></h4>
+      ${p.causes.map((c, i) => `<div style="margin:4px 0"><b>${i + 1}. ${c[0]}</b><br><span class="note">Evidence: ${c[2]}</span></div>`).join('')}</div>
+    <div class="card"><h4><span class="pill p-mute">Step 4</span> Draft <span class="pill p-base">system decides</span></h4><div class="mail">${draft.replace(/</g, '&lt;')}</div>
+      ${p.tier !== 'Enterprise' ? '<p class="note" style="margin:8px 0 0">Plus an Appcues guide on the posting\'s edit page with the same edits and an "apply" button.</p>' : ''}</div>
+    <div class="card"><h4><span class="pill p-mute">Step 5</span> Automated checks</h4>
+      <span class="${okNums ? 'ok' : 'no'}">${okNums ? '✓' : '✗'}</span> every number matches an input &nbsp; <span class="ok">✓</span> no outcome promised &nbsp; <span class="ok">✓</span> links resolve &nbsp; <span class="${p.conf >= 0.8 ? 'ok' : 'no'}">${p.conf >= 0.8 ? '✓' : '✗'}</span> confidence ≥ 0.80${p.conf < 0.8 ? ' <span class="note">→ goes to a person regardless of tier</span>' : ''}</div>
+    <div class="card"><h4><span class="pill p-mute">Step 6</span> Route <span class="pill ${cls}">${who}</span></h4>${why}</div>
+    <div class="card"><h4><span class="pill p-mute">Step 7</span> Learn</h4>Check at day +7: fix applied? applicants since? The case joins the evaluation set.</div>`;
+}
+
+// ─── Prototype: approval queue ──────────────────────────────────────────────
+const Q = [
+  ['Cedarline Health', 'Mid-Market', 'Patient Experience Associate', 'Apply step asks for 3 documents'],
+  ['Maple & Finch Retail', 'Mid-Market', 'Store Management Trainee', 'Pay range missing'],
+  ['Tidewater Credit Union', 'Long tail', 'Member Services Intern', 'Renewal in 60 days: routed to a person'],
+  ['Summit Ridge Analytics', 'Mid-Market', 'Data Analyst I', 'Targeting 3 schools vs benchmark 11'],
+  ['Kestrel Aerospace', 'Mid-Market', 'Manufacturing Engineering Co-op', 'Title reads senior for early talent'],
+  ['Juniper Civic Partners', 'Long tail', 'Policy Fellow', 'Confidence 0.74: routed to a person'],
+  ['Harborview Hotels', 'Mid-Market', 'Hospitality Leadership Program', 'Description 140 words vs 430'],
+  ['Alder & Moss Legal', 'Mid-Market', 'Paralegal Assistant', 'Posted on-site only; benchmark offers hybrid']
+].map((r, i) => ({ i, emp: r[0], tier: r[1], title: r[2], why: r[3], state: null }));
+const HIST = { approved: 171, edited: 22, rejected: 7 };
+function renderQueue() {
+  const done = Q.filter(q => q.state), a = HIST.approved + done.filter(q => q.state === 'approved').length, e = HIST.edited + done.filter(q => q.state === 'edited').length, r = HIST.rejected + done.filter(q => q.state === 'rejected').length, n = a + e + r;
+  const light = Math.round(100 * (a + e * 0.5) / n), gates = [['Approved with light or no edits', light + '%', '≥ 95%', light >= 95], ['Factual errors in audit (4 wks)', '0', '0', true], ['Lift over holdout', '+9.8 applicants', '> 0, significant', true], ['Weeks at this level', '3', '4', false]];
+  document.getElementById('t-queue').innerHTML = `
+    <p class="sub">Drafts waiting on a person, as a CSM would see them in a Gainsight task list. Your decisions update the readiness gates for Phase 2 (history before today: ${n - done.length} decisions, illustrative).</p>
+    <div class="scroll"><table class="tbl"><thead><tr><th>Employer</th><th>Tier</th><th>Posting</th><th>Why it's here</th><th>Decision</th></tr></thead><tbody>
+      ${Q.map(q => `<tr><td><b>${q.emp}</b></td><td>${q.tier}</td><td>${q.title}</td><td>${q.why}</td><td>${q.state ? `<span class="pill ${q.state === 'rejected' ? 'p-bad' : q.state === 'edited' ? 'p-warn' : 'p-add'}">${q.state}</span>` : `<button class="btn pri" data-q="${q.i}" data-s="approved">Approve</button> <button class="btn" data-q="${q.i}" data-s="edited">Edit</button> <button class="btn" data-q="${q.i}" data-s="rejected">Reject</button>`}</td></tr>`).join('')}
+    </tbody></table></div>
+    <h3>Phase 2 readiness (long tail auto-send)</h3>
+    <div class="scroll"><table class="tbl"><thead><tr><th>Gate</th><th>Now</th><th>Needed</th><th></th></tr></thead><tbody>
+      ${gates.map(g => `<tr><td>${g[0]}</td><td><b>${g[1]}</b></td><td>${g[2]}</td><td>${g[3] ? '<span class="pill p-add">met</span>' : '<span class="pill p-warn">not yet</span>'}</td></tr>`).join('')}
+    </tbody></table></div>
+    <p class="note">Why mostly Mid-Market: those drafts always need CSM approval by design. Long-tail drafts only appear here when a guardrail sends them to a person.</p>`;
+  document.querySelectorAll('#t-queue [data-q]').forEach(b => b.onclick = () => { Q[+b.dataset.q].state = b.dataset.s; renderQueue(); });
+}
+
+// ─── Prototype: dashboard ───────────────────────────────────────────────────
+const charts = {};
+function renderDash() {
+  document.getElementById('t-dash').innerHTML = `
+    <p class="sub">Fall window to date, program vs. holdout. All numbers fictional.</p>
+    <div class="kpis">
+      <div class="kpi"><div class="l">M2 before window closes</div><div class="v">64%</div><div class="s">program · holdout 51% (+13 pts)</div></div>
+      <div class="kpi"><div class="l">Days signed → M2</div><div class="v">11</div><div class="s">median · holdout 19</div></div>
+      <div class="kpi"><div class="l">Rescued postings</div><div class="v">+9.8</div><div class="s">applicants in 7 days vs held-out postings</div></div>
+      <div class="kpi"><div class="l">CSM minutes / rescue</div><div class="v">4</div><div class="s">Mid-Market approval · was 35 by hand</div></div>
+    </div>
+    <div class="grid2">
+      <div class="card"><b style="font-size:14px">Milestone 2 reached before the window closes</b><div class="note">By tier, program vs. holdout</div><div class="chartbox"><canvas id="cM2"></canvas></div></div>
+      <div class="card"><b style="font-size:14px">Applicants per rescued posting</b><div class="note">Days after the rescue, vs. flagged postings held out</div><div class="chartbox"><canvas id="cLift"></canvas></div></div>
+    </div>
+    <h3>Shut-off monitor</h3>
+    <div class="scroll"><table class="tbl"><thead><tr><th>Guardrail</th><th>Now</th><th>Shut-off</th><th>Status</th></tr></thead><tbody>
+      <tr><td>Program: M2-before-close lift over holdout</td><td>+13 pts</td><td>&lt; +5 pts after a full window</td><td><span class="pill p-add">healthy</span></td></tr>
+      <tr><td>Program: unsubscribes per send</td><td>0.21%</td><td>&gt; 0.5%</td><td><span class="pill p-add">healthy</span></td></tr>
+      <tr><td>Program: spam complaints</td><td>0.04%</td><td>&gt; 0.1%</td><td><span class="pill p-add">healthy</span></td></tr>
+      <tr><td>Workflow: factual errors sent without approval</td><td>0</td><td>any</td><td><span class="pill p-add">healthy</span></td></tr>
+      <tr><td>Workflow: approval rate, last 2 weeks</td><td>86%</td><td>&lt; 80%</td><td><span class="pill p-warn">watch</span></td></tr>
+      <tr><td>Workflow: lift over holdout</td><td>+9.8 applicants</td><td>none after 4 weeks</td><td><span class="pill p-add">healthy</span></td></tr>
+    </tbody></table></div>
+    <h3>Team efficiency</h3>
+    <div class="kpis">
+      <div class="kpi"><div class="l">Accounts per CSM</div><div class="v">118</div><div class="s">Mid-Market · was 85</div></div>
+      <div class="kpi"><div class="l">Self-serve rate</div><div class="v">41%</div><div class="s">Mid-Market issues solved via the base</div></div>
+      <div class="kpi"><div class="l">Self-serve rate</div><div class="v">23%</div><div class="s">Enterprise</div></div>
+      <div class="kpi"><div class="l">Long-tail accounts</div><div class="v">6,400</div><div class="s">in the automated journey</div></div>
+    </div>`;
+  if (typeof Chart === 'undefined') return;
+  const cs = getComputedStyle(document.documentElement), c = v => cs.getPropertyValue(v).trim();
+  Chart.defaults.color = c('--ink2'); Chart.defaults.borderColor = c('--line'); Chart.defaults.font.family = 'Inter, system-ui, sans-serif';
+  Object.values(charts).forEach(x => x.destroy());
+  charts.m2 = new Chart(document.getElementById('cM2'), { type: 'bar', data: { labels: ['Long tail', 'Mid-Market', 'Enterprise'], datasets: [
+    { label: 'Program', data: [64, 78, 83], backgroundColor: c('--base'), borderRadius: 4, maxBarThickness: 34 },
+    { label: 'Holdout', data: [51, 71, 80], backgroundColor: c('--ink3'), borderRadius: 4, maxBarThickness: 34 }] },
+    options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } } }, plugins: { tooltip: { callbacks: { label: x => x.dataset.label + ': ' + x.raw + '%' } } } } });
+  charts.lift = new Chart(document.getElementById('cLift'), { type: 'line', data: { labels: ['Day 0', '1', '2', '3', '4', '5', '6', '7'], datasets: [
+    { label: 'Rescued', data: [0, 2.1, 4.6, 7.2, 9.4, 11.3, 13.0, 14.6], borderColor: c('--add'), backgroundColor: c('--add'), tension: .3, pointRadius: 2.5 },
+    { label: 'Held out', data: [0, 0.8, 1.6, 2.3, 3.0, 3.6, 4.2, 4.8], borderColor: c('--ink3'), backgroundColor: c('--ink3'), tension: .3, pointRadius: 2.5, borderDash: [5, 4] }] },
+    options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, title: { display: true, text: 'Cumulative applicants' } } } } });
+}
+
+document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === t));
+  ['run', 'queue', 'dash'].forEach(k => document.getElementById('t-' + k).classList.toggle('hide', k !== t.dataset.t));
+  if (t.dataset.t === 'queue') renderQueue();
+  if (t.dataset.t === 'dash') renderDash();
+});
+renderRun();
+</script>
+</body>
+</html>
