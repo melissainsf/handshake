@@ -77,6 +77,16 @@ section{padding:40px 0;border-top:1px solid var(--line)}
 .meter{height:8px;border-radius:4px;background:var(--surface2);overflow:hidden;margin-top:6px}.meter i{display:block;height:100%}
 footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
 .hide{display:none}
+.ask{border-left:3px solid var(--ink);background:var(--surface2);border-radius:0 8px 8px 0;padding:10px 14px;margin:0 0 14px;font-size:14.5px}
+.ask .l{display:block;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:2px}
+.checklist{background:var(--surface);border:2px solid var(--ink);border-radius:16px;padding:18px 20px}
+.checklist ol{margin:0;padding-left:0;list-style:none;display:grid;gap:12px}
+.checklist li{display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;font-size:14.5px}
+.checklist .tick{width:22px;height:22px;border-radius:50%;background:var(--add);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+.checklist a{color:var(--base);font-weight:600;text-decoration:none}.checklist a:hover{text-decoration:underline}
+.checklist ul{margin:4px 0 0;padding-left:18px;color:var(--ink2)}.checklist ul li{display:list-item;font-size:13.5px}
+.tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.04em;background:var(--ink);color:var(--bg);border-radius:5px;padding:1px 7px;margin-left:6px;vertical-align:2px}
+.bighead{padding:48px 0 0;border-top:3px solid var(--ink)}
 .stages{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}@media (max-width:900px){.stages{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (max-width:520px){.stages{grid-template-columns:1fr}}
 .stg{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;font-size:13px}
 .stg .h{display:flex;gap:8px;align-items:center;margin-bottom:6px}.stg .num{width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--bg);font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -97,7 +107,7 @@ footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><b>Part 2</b><a href="#thesis">Thesis</a><a href="#lifecycle">Lifecycle</a><a href="#q1">1 · Program</a><a href="#q2">2 · AI workflow</a><a href="#q3">3 · Measurement</a><a href="#proto">Prototype</a><a href="#assume">Assumptions</a><a href="#ai">AI + MCP</a></div></header>
+<header class="top"><div class="wrap"><b>Part 2</b><a href="#brief">The brief, answered</a><a href="#today">Current state</a><a href="#q1">1 · Program</a><a href="#q2">2 · AI workflow</a><a href="#q3">3 · How we'd know</a><a href="#proto">Prototype</a><a href="#ai">Using AI</a><a href="#bigger">Bigger picture</a><a href="#assume">Assumptions</a></div></header>
 
 <div class="wrap">
 <div class="hero">
@@ -106,6 +116,191 @@ footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
   <p class="lede">Design the fully automated journey for the lowest-ARR employers first. Then carry it up to Mid-Market, adding human touches, or swapping them in where testing shows a person wins. Enterprise accounts belong to the Enterprise team and are out of scope. Gainsight and Appcues stay as the delivery layer; AI sits in the decision layer between them.</p>
   <div class="assume"><b>How to read this page.</b> Everything about Handshake's internals (data, metrics, tooling setup) is an assumption from public materials and the brief, marked <span class="pill p-warn">to validate</span>. Every number in the prototype is fictional.</div>
 </div>
+
+<section id="brief" style="border-top:none;padding-top:8px">
+  <div class="checklist">
+    <h2 style="margin-bottom:4px">The brief, answered</h2>
+    <p class="sub" style="margin-bottom:14px">Every ask in the brief, in its own words, with a link to where it's answered.</p>
+    <ol>
+      <li><span class="tick">✓</span><div><b>Current state.</b> "Assume Gainsight and Appcues stay. Assume you can use AI tooling like Claude, ChatGPT, Glean, and Gong." <a href="#today">→ Starting from today</a> · <a href="#q2-inputs">→ where each AI tool is used</a></div></li>
+      <li><span class="tick">✓</span><div><b>1. One digital engagement program you would prioritize first.</b> <a href="#q1">→ Milestone 2 on autopilot, paced by the season</a>
+        <ul><li><a href="#q1-what">What it is</a></li><li><a href="#q1-problem">What problem it solves</a></li><li><a href="#q1-why">Why it's first</a></li></ul></div></li>
+      <li><span class="tick">✓</span><div><b>2. One AI-enabled workflow, specified at step level.</b> <a href="#q2">→ The underperforming-posting rescue, in 7 steps</a>
+        <ul><li><a href="#q2-trigger">The trigger, and what fires it</a></li><li><a href="#q2-inputs">The inputs, and where each one comes from</a></li><li><a href="#q2-line">What the system decides on its own, and what a human approves, and why the line is there</a></li><li><a href="#q2-auto">What I'd let it do autonomously once trusted, and what would have to be true first</a></li></ul></div></li>
+      <li><span class="tick">✓</span><div><b>3. How you'd know either one worked.</b> <a href="#q3">→ Answered for both the program and the workflow</a>
+        <ul><li>Leading and lagging indicators</li><li>What we'd compare against</li><li>The number that would tell us to shut it off</li></ul></div></li>
+      <li><span class="tick">✓</span><div><b>Format is up to you.</b> <a href="#proto">→ This page plus a working prototype</a></div></li>
+      <li><span class="tick">✓</span><div><b>On using AI.</b> "Be prepared to speak to how you used it and what you built." <a href="#ai">→ How I used it, and how I'd use it at Handshake</a></div></li>
+    </ol>
+  </div>
+</section>
+
+<section id="today">
+  <h2>Starting from today</h2>
+  <div class="ask"><span class="l">From the brief</span><b>Current state.</b> Our digital CS motion today runs on Gainsight and Appcues. Most of our programs are lifecycle emails and in-app guidance. Assume Gainsight and Appcues stay.</div>
+  <div class="grid3">
+    <div class="card"><div class="who" style="color:var(--base)">What exists</div><p>Lifecycle emails and in-app guidance, run through Gainsight and Appcues.</p></div>
+    <div class="card"><div class="who" style="color:var(--add)">What stays</div><p>Gainsight and Appcues remain the delivery layer: every email and guide on this page goes out through them. Nothing is replaced.</p></div>
+    <div class="card"><div class="who" style="color:var(--swap)">What changes</div><p>Touches fire on what each customer does (posting live, applicants coming in), not only on the calendar, and AI decides <i>what</i> to send between the data and those two tools.</p></div>
+  </div>
+  <p class="note">How today's programs trigger and target is not public, so the "what changes" is framed as an addition, not a critique <span class="pill p-warn">to validate</span>.</p>
+</section>
+
+<section id="q1">
+  <div class="qhead"><span class="qnum">Question 1</span><h2>First program: Milestone 2 on autopilot, paced by the season</h2></div>
+  <div class="ask"><span class="l">From the brief</span><b>1. One digital engagement program you would prioritize first.</b> What it is, what problem it solves, and why it's first.</div>
+  <div class="grid3">
+    <div class="card" id="q1-what"><div class="who" style="color:var(--base)">What it is</div><p>An automated program that gets every new SMB employer from signed to <b>a live posting that is drawing quality applicants</b> (Handshake's Milestone 2) before their current recruiting window closes. Delivered through Gainsight JO emails and Appcues guides on the posting pages; paced by how many weeks are left in the window.</p></div>
+    <div class="card" id="q1-problem"><div class="who" style="color:var(--swap)">What problem it solves</div><p>A low-ARR employer whose first posting quietly underperforms has no CSM to notice. They conclude "Handshake doesn't work for us", and we find out at renewal, a season too late. Lifecycle emails that run on a schedule, rather than on posting results, can't tell a thriving posting from a dead one <span class="pill p-warn">to validate: how today's programs trigger</span>.</p></div>
+    <div class="card" id="q1-why"><div class="who" style="color:var(--add)">Why it's first</div><p>1) Quality applicants is the value an employer pays for, so it's the milestone closest to revenue. 2) Everything after it (promotions, measuring, renewal, expansion) depends on it. 3) It's SMB, where bottom-up starts. 4) The season is a hard clock: a week lost in October can't be bought back in March. 5) It runs on data that already exists: postings and applicants <span class="pill p-warn">to validate</span>.</p></div>
+  </div>
+  <h3>How the program runs</h3>
+  <div class="scroll"><table class="tbl">
+    <thead><tr><th>Milestone step</th><th>Automated touch (base)</th><th>Season-aware pacing</th></tr></thead>
+    <tbody>
+      <tr><td>Signed → handoff</td><td>Welcome email with pre-work; Appcues setup checklist on first login</td><td>&gt; 8 weeks left: standard cadence · &lt; 8 weeks: "launch this week" track, checklist trimmed to what's needed to post</td></tr>
+      <tr><td>Milestone 1 · Getting started</td><td>Checklist: roles &amp; permissions, company profile, employer brand</td><td>Profile items deferred until after the first posting when the window is short</td></tr>
+      <tr><td>Milestone 2 · First posting</td><td>Template picker + posting quality check in-app; school-targeting suggestions</td><td>Nudge after 3 days without a posting (standard) or 1 day (short window)</td></tr>
+      <tr><td>Milestone 2 · Quality applicants</td><td><b>The AI posting rescue (Question 2)</b> when a live posting is under benchmark</td><td>Fires at day 7, or day 5 with &lt; 4 weeks left</td></tr>
+      <tr><td>Milestone 2 reached</td><td>"Your first applicants" email: who applied, what to do next; hands off to Milestone 3 promotions</td><td>—</td></tr>
+    </tbody></table></div>
+</section>
+
+<section id="q2">
+  <div class="qhead"><span class="qnum">Question 2</span><h2>AI workflow: the underperforming-posting rescue</h2></div>
+  <div class="ask"><span class="l">From the brief</span><b>2. One AI-enabled workflow, specified at step level.</b> A box labeled "AI" is not a design. We need: the trigger, and what fires it · the inputs, and where each one comes from · what the system decides on its own, and what a human approves, and why the line is there · what you'd let it do autonomously once you trusted it, and what would have to be true first.</div>
+  <p class="sub">Seven steps. It serves Milestone 2 for SMB and Mid-Market; Enterprise accounts are excluded. Each of the brief's four asks is labelled where it's answered.</p>
+  <div class="steps">
+    <div class="step" id="q2-trigger"><div class="n">1</div><div><h4>The trigger, and what fires it <span class="tag">Brief ask 1 of 4</span></h4>
+      <p><b>Condition:</b> a posting has been live 7 days (5 if under 4 weeks remain in the window) with applicants below <b>50% of the benchmark</b> for comparable postings: same role family, location type, and school targeting.</p>
+      <p><b>What fires it:</b> a nightly job over product data computes each live posting's applicants against its benchmark and writes a signal to Gainsight, which opens the workflow. <b>Excluded:</b> Enterprise accounts (owned by the Enterprise team). <b>Suppressed if:</b> the posting fired in the last 14 days, the posting is closed, or the account already has an open CSM task.</p></div></div>
+    <div class="step" id="q2-inputs"><div class="n">2</div><div><h4>The inputs, and where each one comes from <span class="tag">Brief ask 2 of 4</span></h4>
+      <div class="scroll" style="margin-top:6px"><table class="tbl">
+        <thead><tr><th>Input</th><th>Source</th><th>Why it's needed</th></tr></thead>
+        <tbody>
+          <tr><td>Posting fields: title, pay, location, schools targeted, description, template used</td><td><span class="src">Handshake product data</span></td><td>What we're diagnosing</td></tr>
+          <tr><td>Views → applies funnel for this posting</td><td><span class="src">Product analytics</span></td><td>Tells a visibility problem from a conversion problem</td></tr>
+          <tr><td>Benchmark: comparable postings that hit target, and what they had in common</td><td><span class="src">Data warehouse</span></td><td>Grounds every suggestion in evidence</td></tr>
+          <tr><td>Tier, ARR, renewal date, health score, CSM, prior touches</td><td><span class="src">Gainsight</span></td><td>Routing and tone; no repeat of an ignored suggestion</td></tr>
+          <tr><td>In-app guide history: seen, dismissed, completed</td><td><span class="src">Appcues</span></td><td>Don't re-show what they dismissed</td></tr>
+          <tr><td>Call summaries, if any (usually none in SMB)</td><td><span class="src">Gong</span></td><td>Context: hiring plans, stated goals</td></tr>
+          <tr><td>Posting best-practice playbooks and help articles</td><td><span class="src">Glean</span></td><td>The fix links to Handshake's own guidance</td></tr>
+          <tr><td>Season calendar: days left in the current window</td><td><span class="src">Config</span></td><td>Urgency and pacing</td></tr>
+        </tbody></table></div></div></div>
+    <div class="step"><div class="n">3</div><div><h4>Diagnose <span class="pill p-base">system decides</span></h4><p>An LLM (Claude or ChatGPT, whichever wins our evaluation set) compares the posting with the benchmark and returns a structured result: up to three likely causes, each tied to a specific field and the benchmark evidence, plus a confidence score. Numbers are passed in from the data, never generated.</p></div></div>
+    <div class="step"><div class="n">4</div><div><h4>Draft the fix <span class="pill p-base">system decides</span></h4><p>The specific edits (e.g. "add a pay range", "add these 6 schools that fill similar roles"), an email from the account's owner (the scaled CS team in SMB, the named CSM above it), and an Appcues guide on the posting's edit page that walks through the same edits with one click to apply.</p></div></div>
+    <div class="step"><div class="n">5</div><div><h4>Automated checks <span class="pill p-base">system decides</span></h4><p>Every number in the draft matches an input; no promises of outcomes; links resolve; tone and brand rules pass; confidence is above threshold. Any failure routes the draft to a person instead of sending.</p></div></div>
+    <div class="step"><div class="n">6</div><div><h4>Route by tier: where the human line sits <span class="pill p-swap">human approves</span></h4>
+      <div class="scroll" style="margin-top:6px"><table class="tbl"><thead><tr><th>Tier</th><th>At launch</th><th>Why the line is there</th></tr></thead><tbody>
+        <tr><td>SMB</td><td>A person approves every draft (Phase 1), then a sample (Phase 2+)</td><td>Until we've measured accuracy, one wrong diagnosis at scale is thousands of wrong emails</td></tr>
+        <tr><td>Mid-Market</td><td>The account's CSM approves or edits in a Gainsight task; 1-business-day deadline, then it falls back to the base email</td><td>A revenue-bearing relationship: the CSM owns what the customer hears</td></tr>
+        <tr><td>Any tier, renewal within 90 days</td><td>Always a person</td><td>A wrong message during renewal costs more than a slow one</td></tr>
+      </tbody></table></div></div></div>
+    <div class="step"><div class="n">7</div><div><h4>Send, then learn <span class="pill p-base">system</span></h4><p>Sent via Gainsight JO and Appcues. Seven days later the workflow records whether the fix was applied and what applicants did, and adds the case to the evaluation set that the diagnosis step is re-tested against.</p></div></div>
+  </div>
+
+  <h3 id="q2-line">What the system decides on its own, and what a human approves, and why the line is there <span class="tag">Brief ask 3 of 4</span></h3>
+  <div class="scroll"><table class="tbl">
+    <thead><tr><th>The system decides on its own</th><th>A human approves</th><th>Why the line is there</th></tr></thead>
+    <tbody>
+      <tr><td>Whether a posting qualifies (step 1)</td><td>—</td><td>A threshold on data; nothing reaches a customer yet</td></tr>
+      <tr><td>The diagnosis and the draft fix (steps 3–4)</td><td>—</td><td>Drafts are reversible; only sends aren't</td></tr>
+      <tr><td>Blocking its own draft when a check fails (step 5)</td><td>Every blocked or low-confidence draft</td><td>The system may stop itself, but never overrides a failed check</td></tr>
+      <tr><td>Channel and timing</td><td>—</td><td>Low risk, measured by the holdout</td></tr>
+      <tr><td>—</td><td><b>SMB sends</b>, until the Phase 2 gates are met</td><td>Until accuracy is measured, one wrong diagnosis at scale is thousands of wrong emails</td></tr>
+      <tr><td>—</td><td><b>Every Mid-Market send</b>, by the account's CSM</td><td>A revenue-bearing relationship: the CSM owns what the customer hears</td></tr>
+      <tr><td>—</td><td><b>Anything within 90 days of renewal</b>, any tier</td><td>A wrong message during renewal costs more than a slow one</td></tr>
+    </tbody></table></div>
+
+  <h3 id="q2-auto">What I'd let it do autonomously once trusted, and what would have to be true first <span class="tag">Brief ask 4 of 4</span></h3>
+  <div class="ladder">
+    <div class="card"><span class="pill p-mute">Phase 0 · shadow</span><h4 style="margin-top:8px">AI drafts, people send their own</h4><p>Compare AI diagnoses with what CSMs would have said. Builds the evaluation set.</p></div>
+    <div class="card"><span class="pill p-add">Phase 1</span><h4 style="margin-top:8px">A person approves every draft</h4><p>Entry: AI matches the CSM diagnosis on 85%+ of 200 shadow cases.</p></div>
+    <div class="card"><span class="pill p-base">Phase 2</span><h4 style="margin-top:8px">SMB sends on its own</h4><p>Entry: 95%+ approved with light or no edits over 4 weeks; zero factual errors in audit; lift over holdout. A 10% weekly sample is still audited.</p></div>
+    <div class="card"><span class="pill p-warn">Phase 3</span><h4 style="margin-top:8px">Pre-fills the fix in the posting</h4><p>The customer still clicks "apply"; we never edit a posting without consent. Entry: Phase 2 stable for a full season; legal and brand sign-off.</p></div>
+  </div>
+  <p class="note">Mid-Market stays human-in-the-loop by design (the tier choice), not because the AI isn't trusted.</p>
+</section>
+
+<section id="q3">
+  <div class="qhead"><span class="qnum">Question 3</span><h2>How we'd know either one worked</h2></div>
+  <div class="ask"><span class="l">From the brief</span><b>3. How you'd know either one worked.</b> Leading and lagging indicators, what you'd compare against, and the number that would tell you to shut it off.</div>
+  <p class="sub">"Either one" means both, so every row is answered for the program and for the workflow.</p>
+  <div class="scroll"><table class="tbl">
+    <thead><tr><th style="width:18%">The brief asks for</th><th>Question 1 · the program</th><th>Question 2 · the AI workflow</th></tr></thead>
+    <tbody>
+      <tr><td><b>Leading indicators</b></td><td>% of new employers reaching Milestone 2 before their window closes · median days signed → Milestone 2 · Milestone 1 checklist completion</td><td>Draft approval rate and how much people edit · fix applied within 7 days · applicants in the 7 days after · CSM minutes per rescue</td></tr>
+      <tr><td><b>Lagging indicators</b></td><td>First-season results (applicants per posting, roles filled) · logo renewal and GRR for the SMB cohort · NRR including expansion <span class="pill p-warn">to validate</span></td><td>Postings reaching benchmark · roles filled · renewal of accounts that were rescued</td></tr>
+      <tr><td><b>What we'd compare against</b></td><td>A randomized 15% holdout of new SMB employers on today's lifecycle program, <b>in the same season</b>, so seasonal swings can't fake a win</td><td>20% of flagged postings randomly held out (no rescue), over the same weeks</td></tr>
+      <tr><td><b>The number that would tell us to shut it off</b></td><td>Milestone 2-before-close under <b>+5 points</b> vs holdout after one full window · or unsubscribes over <b>0.5%</b> per send · or spam complaints over <b>0.1%</b></td><td><b>Any</b> factual error sent without approval (auto-send pauses at once) · approval under <b>80%</b> for 2 weeks (back to Phase 1) · no lift over holdout after <b>4 weeks</b> (off)</td></tr>
+    </tbody></table></div>
+  <p class="note">Team efficiency, from the job description: accounts per CSM, CSM hours per account, and the Mid-Market self-serve rate. All thresholds are starting points to calibrate, not facts about Handshake. The Dashboard tab of the prototype shows these live.</p>
+</section>
+
+<section id="proto">
+  <h2>Working prototype</h2>
+  <div class="ask"><span class="l">From the brief</span><b>Format is up to you.</b> Slides, a doc, a diagram, a working prototype, whatever communicates best.</div>
+  <p class="sub">A working prototype. <b>Posting rescue</b> runs the Question 2 workflow step by step; <b>Approval queue</b> shows the human line and the autonomy gates; <b>Dashboard</b> shows the Question 3 measures; <b>Journey board</b> shows accounts moving through every stage. Fictional employers and numbers.</p>
+  <div class="proto">
+    <div class="tabs"><button class="tab on" data-t="run">Posting rescue · Q2</button><button class="tab" data-t="queue">Approval queue · Q2</button><button class="tab" data-t="dash">Dashboard · Q3</button><button class="tab" data-t="board">Journey board</button></div>
+    <div id="t-board" class="hide"></div>
+    <div id="t-run"><div class="pick" id="pick"></div><div class="run" id="runout"></div></div>
+    <div id="t-queue" class="hide"></div>
+    <div id="t-dash" class="hide"></div>
+  </div>
+</section>
+
+<section id="ai">
+  <h2>On using AI</h2>
+  <div class="ask"><span class="l">From the brief</span><b>On using AI:</b> we expect you to. Be prepared to speak to how you used it and what you built.</div>
+  <h3>How I used it, and what I built</h3>
+  <div class="grid2">
+    <div class="card"><b>This page and prototype.</b> Designed in a working session with Claude, built with Claude Code, versioned in GitHub, and hosted on Netlify.</div>
+    <div class="card"><b>Part 1's dashboard.</b> The real version reads live CRM, Slack and database data through its own integrations; built the same way.</div>
+  </div>
+  <h3>How I'd use it at Handshake</h3>
+  <p class="sub">Every trigger, milestone and dashboard on this page comes out of the same loop: connect AI to the whole stack, ask questions of live data, test a trigger before switching it on, and keep a person on every write.</p>
+  <h4 style="margin:18px 0 6px">1 · Connect AI to the stack through MCP</h4>
+  <p class="sub" style="margin-bottom:10px">MCP (Model Context Protocol) connectors let Claude, or another assistant, read from and act in the tools CS already uses. I'd use a vendor's MCP server where one exists, otherwise a small custom one over their API <span class="pill p-warn">to validate per tool</span>.</p>
+  <div class="scroll"><table class="tbl">
+    <thead><tr><th>System</th><th>What AI can read or do through it</th><th>Used for</th></tr></thead>
+    <tbody>
+      <tr><td><b>Gainsight</b></td><td>Accounts, tiers, health scores, renewal dates, tasks (CTAs), journey programs</td><td>Segmenting, routing, drafting journey programs and rules</td></tr>
+      <tr><td><b>Appcues</b></td><td>Guide and checklist performance: seen, completed, dismissed</td><td>Finding where in-app guidance loses people; drafting guide copy</td></tr>
+      <tr><td><b>Product data / warehouse</b></td><td>Postings, views, applicants, benchmarks (read-only SQL)</td><td>Triggers, milestone definitions, backtests, dashboards</td></tr>
+      <tr><td><b>Gong</b></td><td>Call transcripts and summaries</td><td>Why Mid-Market customers stall, in their own words</td></tr>
+      <tr><td><b>Glean</b></td><td>Playbooks, help articles, internal docs</td><td>Grounding every AI message in Handshake's own guidance</td></tr>
+      <tr><td><b>Slack</b></td><td>Post to channels and DMs</td><td>CSM alerts, the weekly shut-off digest, approval nudges</td></tr>
+    </tbody></table></div>
+
+  <h4 style="margin:18px 0 6px">2 · The loop, for any journey point</h4>
+  <div class="ladder">
+    <div class="card"><span class="pill p-base">Ask</span><h4 style="margin-top:8px">Question in plain English</h4><p>"Which SMB employers posted this month but are under half their benchmark, by industry?" becomes a query across the warehouse and Gainsight in minutes, not a data-team ticket.</p></div>
+    <div class="card"><span class="pill p-base">See</span><h4 style="margin-top:8px">Visualize it</h4><p>The answer comes back as a chart or a working dashboard like the journey board above, not a CSV. Anyone on the team can ask the next question.</p></div>
+    <div class="card"><span class="pill p-add">Test</span><h4 style="margin-top:8px">Backtest the trigger</h4><p>Before a trigger goes live, run it against last season: how many accounts it would have fired on, how many recovered on their own, what it would have cost in CSM time.</p></div>
+    <div class="card"><span class="pill p-swap">Ship</span><h4 style="margin-top:8px">Draft, review, launch</h4><p>AI drafts the Gainsight rule, the journey program spec, the email and the Appcues guide copy. A person reviews and publishes, and every change is logged.</p></div>
+  </div>
+
+  <h4 style="margin:18px 0 6px">3 · Example: designing the posting-rescue trigger</h4>
+  <div class="scroll"><table class="tbl">
+    <thead><tr><th>Step</th><th>What I'd ask</th><th>Connectors</th></tr></thead>
+    <tbody>
+      <tr><td>Find the moment</td><td>"For SMB employers who churned last year, where did they stop in the four milestones?"</td><td><span class="src">Gainsight</span> <span class="src">Warehouse</span></td></tr>
+      <tr><td>Set the threshold</td><td>"At what applicants-vs-benchmark ratio on day 7 do postings stop recovering on their own?"</td><td><span class="src">Warehouse</span></td></tr>
+      <tr><td>Backtest</td><td>"Run 'under 50% at day 7' over last fall: how many fires a week, and how many of those recovered anyway?"</td><td><span class="src">Warehouse</span></td></tr>
+      <tr><td>Write the fix content</td><td>"Draft the three most common fixes, using our posting playbook"</td><td><span class="src">Glean</span></td></tr>
+      <tr><td>Build it</td><td>"Draft the Gainsight rule and journey program spec, and the Appcues guide for the posting edit page"</td><td><span class="src">Gainsight</span> <span class="src">Appcues</span></td></tr>
+      <tr><td>Watch it</td><td>"Every Monday, post the shut-off monitor to #scaled-cs and flag anything past threshold"</td><td><span class="src">Warehouse</span> <span class="src">Slack</span></td></tr>
+    </tbody></table></div>
+
+  <h4 style="margin:18px 0 6px">4 · Guardrails</h4>
+  <div class="grid2">
+    <div class="card"><b>Read-only by default.</b> Connectors start with read access. Anything that writes (sends a message, changes a CRM field, publishes a guide) goes through a person until it has earned autonomy, the same ladder as the posting rescue.</div>
+    <div class="card"><b>Data stays inside approved systems.</b> Connectors run under IT and security review, with access scoped to the CS team's own permissions and an audit log of every action.</div>
+  </div>
+</section>
+
+<div class="bighead" id="bigger"><div class="eyebrow">Beyond the three questions</div><h2 style="font-size:32px">The bigger picture: where this program fits</h2><p class="sub">The thinking behind the answers: how I'd design the whole employer journey, and where the first program sits in it.</p></div>
 
 <section id="thesis">
   <h2>The thesis</h2>
@@ -142,98 +337,6 @@ footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
   <p class="note">Legend: <span class="pill p-base">Base</span> automated, available to every tier · <span class="pill p-add">Added</span> human touch on top of the base · <span class="pill p-swap">Swapped</span> automated outreach replaced by a person (self-serve stays). Swaps marked "tested" show an illustrative result.</p>
 </section>
 
-<section id="q1">
-  <div class="qhead"><span class="qnum">Question 1</span><h2>First program: Milestone 2 on autopilot, paced by the season</h2></div>
-  <p class="sub">One digital engagement program to prioritize first: what it is, what problem it solves, and why it's first.</p>
-  <div class="grid3">
-    <div class="card"><div class="who" style="color:var(--base)">What it is</div><p>An automated program that gets every new SMB employer from signed to <b>a live posting that is drawing quality applicants</b> (Handshake's Milestone 2) before their current recruiting window closes. Delivered through Gainsight JO emails and Appcues guides on the posting pages; paced by how many weeks are left in the window.</p></div>
-    <div class="card"><div class="who" style="color:var(--swap)">The problem it solves</div><p>A low-ARR employer whose first posting quietly underperforms has no CSM to notice. They conclude "Handshake doesn't work for us", and we find out at renewal, a season too late. Today's lifecycle emails are calendar-based, so they can't tell a thriving posting from a dead one.</p></div>
-    <div class="card"><div class="who" style="color:var(--add)">Why it's first</div><p>1) Quality applicants is the value an employer pays for, so it's the milestone closest to revenue. 2) Everything after it (promotions, measuring, renewal, expansion) depends on it. 3) It's SMB, where bottom-up starts. 4) The season is a hard clock: a week lost in October can't be bought back in March. 5) It runs on data that already exists: postings and applicants <span class="pill p-warn">to validate</span>.</p></div>
-  </div>
-  <h3>How the program runs</h3>
-  <div class="scroll"><table class="tbl">
-    <thead><tr><th>Milestone step</th><th>Automated touch (base)</th><th>Season-aware pacing</th></tr></thead>
-    <tbody>
-      <tr><td>Signed → handoff</td><td>Welcome email with pre-work; Appcues setup checklist on first login</td><td>&gt; 8 weeks left: standard cadence · &lt; 8 weeks: "launch this week" track, checklist trimmed to what's needed to post</td></tr>
-      <tr><td>Milestone 1 · Getting started</td><td>Checklist: roles &amp; permissions, company profile, employer brand</td><td>Profile items deferred until after the first posting when the window is short</td></tr>
-      <tr><td>Milestone 2 · First posting</td><td>Template picker + posting quality check in-app; school-targeting suggestions</td><td>Nudge after 3 days without a posting (standard) or 1 day (short window)</td></tr>
-      <tr><td>Milestone 2 · Quality applicants</td><td><b>The AI posting rescue (Question 2)</b> when a live posting is under benchmark</td><td>Fires at day 7, or day 5 with &lt; 4 weeks left</td></tr>
-      <tr><td>Milestone 2 reached</td><td>"Your first applicants" email: who applied, what to do next; hands off to Milestone 3 promotions</td><td>—</td></tr>
-    </tbody></table></div>
-</section>
-
-<section id="q2">
-  <div class="qhead"><span class="qnum">Question 2</span><h2>AI workflow: the underperforming-posting rescue</h2></div>
-  <p class="sub">Specified at step level. It serves Milestone 2 for SMB and Mid-Market; only where the human sits changes. Enterprise accounts are excluded.</p>
-  <div class="steps">
-    <div class="step"><div class="n">1</div><div><h4>Trigger, and what fires it</h4>
-      <p><b>Condition:</b> a posting has been live 7 days (5 if under 4 weeks remain in the window) with applicants below <b>50% of the benchmark</b> for comparable postings: same role family, location type, and school targeting.</p>
-      <p><b>What fires it:</b> a nightly job over product data computes each live posting's applicants against its benchmark and writes a signal to Gainsight, which opens the workflow. <b>Excluded:</b> Enterprise accounts (owned by the Enterprise team). <b>Suppressed if:</b> the posting fired in the last 14 days, the posting is closed, or the account already has an open CSM task.</p></div></div>
-    <div class="step"><div class="n">2</div><div><h4>Gather inputs, and where each comes from</h4>
-      <div class="scroll" style="margin-top:6px"><table class="tbl">
-        <thead><tr><th>Input</th><th>Source</th><th>Why it's needed</th></tr></thead>
-        <tbody>
-          <tr><td>Posting fields: title, pay, location, schools targeted, description, template used</td><td><span class="src">Handshake product data</span></td><td>What we're diagnosing</td></tr>
-          <tr><td>Views → applies funnel for this posting</td><td><span class="src">Product analytics</span></td><td>Tells a visibility problem from a conversion problem</td></tr>
-          <tr><td>Benchmark: comparable postings that hit target, and what they had in common</td><td><span class="src">Data warehouse</span></td><td>Grounds every suggestion in evidence</td></tr>
-          <tr><td>Tier, ARR, renewal date, health score, CSM, prior touches</td><td><span class="src">Gainsight</span></td><td>Routing and tone; no repeat of an ignored suggestion</td></tr>
-          <tr><td>In-app guide history: seen, dismissed, completed</td><td><span class="src">Appcues</span></td><td>Don't re-show what they dismissed</td></tr>
-          <tr><td>Call summaries, if any (usually none in SMB)</td><td><span class="src">Gong</span></td><td>Context: hiring plans, stated goals</td></tr>
-          <tr><td>Posting best-practice playbooks and help articles</td><td><span class="src">Glean</span></td><td>The fix links to Handshake's own guidance</td></tr>
-          <tr><td>Season calendar: days left in the current window</td><td><span class="src">Config</span></td><td>Urgency and pacing</td></tr>
-        </tbody></table></div></div></div>
-    <div class="step"><div class="n">3</div><div><h4>Diagnose <span class="pill p-base">system decides</span></h4><p>An LLM (Claude or ChatGPT, whichever wins our evaluation set) compares the posting with the benchmark and returns a structured result: up to three likely causes, each tied to a specific field and the benchmark evidence, plus a confidence score. Numbers are passed in from the data, never generated.</p></div></div>
-    <div class="step"><div class="n">4</div><div><h4>Draft the fix <span class="pill p-base">system decides</span></h4><p>The specific edits (e.g. "add a pay range", "add these 6 schools that fill similar roles"), an email from the account's owner (the scaled CS team in SMB, the named CSM above it), and an Appcues guide on the posting's edit page that walks through the same edits with one click to apply.</p></div></div>
-    <div class="step"><div class="n">5</div><div><h4>Automated checks <span class="pill p-base">system decides</span></h4><p>Every number in the draft matches an input; no promises of outcomes; links resolve; tone and brand rules pass; confidence is above threshold. Any failure routes the draft to a person instead of sending.</p></div></div>
-    <div class="step"><div class="n">6</div><div><h4>Route by tier <span class="pill p-swap">the human line</span></h4>
-      <div class="scroll" style="margin-top:6px"><table class="tbl"><thead><tr><th>Tier</th><th>At launch</th><th>Why the line is there</th></tr></thead><tbody>
-        <tr><td>SMB</td><td>A person approves every draft (Phase 1), then a sample (Phase 2+)</td><td>Until we've measured accuracy, one wrong diagnosis at scale is thousands of wrong emails</td></tr>
-        <tr><td>Mid-Market</td><td>The account's CSM approves or edits in a Gainsight task; 1-business-day deadline, then it falls back to the base email</td><td>A revenue-bearing relationship: the CSM owns what the customer hears</td></tr>
-        <tr><td>Any tier, renewal within 90 days</td><td>Always a person</td><td>A wrong message during renewal costs more than a slow one</td></tr>
-      </tbody></table></div></div></div>
-    <div class="step"><div class="n">7</div><div><h4>Send, then learn <span class="pill p-base">system</span></h4><p>Sent via Gainsight JO and Appcues. Seven days later the workflow records whether the fix was applied and what applicants did, and adds the case to the evaluation set that the diagnosis step is re-tested against.</p></div></div>
-  </div>
-
-  <h3>What I'd let it do on its own once trusted, and what has to be true first</h3>
-  <div class="ladder">
-    <div class="card"><span class="pill p-mute">Phase 0 · shadow</span><h4 style="margin-top:8px">AI drafts, people send their own</h4><p>Compare AI diagnoses with what CSMs would have said. Builds the evaluation set.</p></div>
-    <div class="card"><span class="pill p-add">Phase 1</span><h4 style="margin-top:8px">A person approves every draft</h4><p>Entry: AI matches the CSM diagnosis on 85%+ of 200 shadow cases.</p></div>
-    <div class="card"><span class="pill p-base">Phase 2</span><h4 style="margin-top:8px">SMB sends on its own</h4><p>Entry: 95%+ approved with light or no edits over 4 weeks; zero factual errors in audit; lift over holdout. A 10% weekly sample is still audited.</p></div>
-    <div class="card"><span class="pill p-warn">Phase 3</span><h4 style="margin-top:8px">Pre-fills the fix in the posting</h4><p>The customer still clicks "apply"; we never edit a posting without consent. Entry: Phase 2 stable for a full season; legal and brand sign-off.</p></div>
-  </div>
-  <p class="note">Mid-Market stays human-in-the-loop by design (the tier choice), not because the AI isn't trusted.</p>
-</section>
-
-<section id="q3">
-  <div class="qhead"><span class="qnum">Question 3</span><h2>How we'd know either one worked</h2></div>
-  <p class="sub">Leading and lagging indicators, what we compare against, and the number that shuts it off, for the program and the workflow separately.</p>
-  <div class="grid2">
-    <div class="card"><h3 style="margin-top:0">The program (Question 1)</h3>
-      <p><b>Leading:</b> % of new employers reaching Milestone 2 before their window closes · median days signed → Milestone 2 · Milestone 1 checklist completion.</p>
-      <p><b>Lagging:</b> first-season results (applicants per posting, roles filled) · logo renewal and GRR for the SMB cohort · NRR including expansion into promotions, AI Sourcing and Insights Pro <span class="pill p-warn">to validate</span>.</p>
-      <p><b>Compared against:</b> a randomized 15% holdout of new SMB employers who get today's lifecycle emails, <b>in the same season</b>, so seasonal swings can't fake a win.</p>
-      <p><b>Shut it off if:</b> after one full window, Milestone 2-before-close is not at least <b>5 points</b> above holdout; or unsubscribes exceed <b>0.5%</b> per send, or spam complaints <b>0.1%</b>.</p></div>
-    <div class="card"><h3 style="margin-top:0">The AI workflow (Question 2)</h3>
-      <p><b>Leading:</b> draft approval rate and how much people edit · fix applied within 7 days · applicants in the 7 days after, against flagged postings that got nothing · CSM minutes per rescue.</p>
-      <p><b>Lagging:</b> postings reaching benchmark · roles filled · renewal of accounts that were rescued.</p>
-      <p><b>Compared against:</b> 20% of flagged postings randomly held out (no rescue), measured over the same weeks.</p>
-      <p><b>Shut it off if:</b> <b>any</b> factual error goes out without approval (auto-send pauses immediately) · approval rate under <b>80%</b> for 2 weeks (back to Phase 1) · no lift over holdout after <b>4 weeks</b> (off).</p></div>
-  </div>
-  <p class="note">Team efficiency, from the job description: accounts per CSM, CSM hours per account, and the Mid-Market self-serve rate (issues solved through the base without the CSM). All thresholds are starting points to calibrate, not facts about Handshake.</p>
-</section>
-
-<section id="proto">
-  <h2>Working prototype</h2>
-  <p class="sub">The workflow running on example postings, the approval queue, and the measurement dashboard. Fictional employers and numbers; the logic is the design above.</p>
-  <div class="proto">
-    <div class="tabs"><button class="tab on" data-t="board">Journey board</button><button class="tab" data-t="run">Posting rescue</button><button class="tab" data-t="queue">Approval queue</button><button class="tab" data-t="dash">Dashboard</button></div>
-    <div id="t-board"></div>
-    <div id="t-run" class="hide"><div class="pick" id="pick"></div><div class="run" id="runout"></div></div>
-    <div id="t-queue" class="hide"></div>
-    <div id="t-dash" class="hide"></div>
-  </div>
-</section>
-
 <section id="assume">
   <h2>Assumptions and open questions</h2>
   <p class="sub">What I'd validate in the first 30 days, and the questions I'd bring to the panel.</p>
@@ -249,50 +352,6 @@ footer{padding:40px 0 60px;color:var(--ink3);font-size:13px}
       <li>Is Gainsight Journey Orchestrator the email engine, or is that in a marketing tool?</li>
       <li>What does "quality applicant" mean internally, and is it measured?</li></ul></div>
   </div>
-</section>
-
-<section id="ai">
-  <h2>How I'd use AI to build and run this</h2>
-  <p class="sub">Every trigger, milestone and dashboard on this page comes out of the same loop: connect AI to the whole stack, ask questions of live data, test a trigger before switching it on, and keep a person on every write.</p>
-  <h3>1 · Connect AI to the stack through MCP</h3>
-  <p class="sub" style="margin-bottom:10px">MCP (Model Context Protocol) connectors let Claude, or another assistant, read from and act in the tools CS already uses. I'd use a vendor's MCP server where one exists, otherwise a small custom one over their API <span class="pill p-warn">to validate per tool</span>.</p>
-  <div class="scroll"><table class="tbl">
-    <thead><tr><th>System</th><th>What AI can read or do through it</th><th>Used for</th></tr></thead>
-    <tbody>
-      <tr><td><b>Gainsight</b></td><td>Accounts, tiers, health scores, renewal dates, tasks (CTAs), journey programs</td><td>Segmenting, routing, drafting journey programs and rules</td></tr>
-      <tr><td><b>Appcues</b></td><td>Guide and checklist performance: seen, completed, dismissed</td><td>Finding where in-app guidance loses people; drafting guide copy</td></tr>
-      <tr><td><b>Product data / warehouse</b></td><td>Postings, views, applicants, benchmarks (read-only SQL)</td><td>Triggers, milestone definitions, backtests, dashboards</td></tr>
-      <tr><td><b>Gong</b></td><td>Call transcripts and summaries</td><td>Why Mid-Market customers stall, in their own words</td></tr>
-      <tr><td><b>Glean</b></td><td>Playbooks, help articles, internal docs</td><td>Grounding every AI message in Handshake's own guidance</td></tr>
-      <tr><td><b>Slack</b></td><td>Post to channels and DMs</td><td>CSM alerts, the weekly shut-off digest, approval nudges</td></tr>
-    </tbody></table></div>
-
-  <h3>2 · The loop, for any journey point</h3>
-  <div class="ladder">
-    <div class="card"><span class="pill p-base">Ask</span><h4 style="margin-top:8px">Question in plain English</h4><p>"Which SMB employers posted this month but are under half their benchmark, by industry?" becomes a query across the warehouse and Gainsight in minutes, not a data-team ticket.</p></div>
-    <div class="card"><span class="pill p-base">See</span><h4 style="margin-top:8px">Visualize it</h4><p>The answer comes back as a chart or a working dashboard like the journey board above, not a CSV. Anyone on the team can ask the next question.</p></div>
-    <div class="card"><span class="pill p-add">Test</span><h4 style="margin-top:8px">Backtest the trigger</h4><p>Before a trigger goes live, run it against last season: how many accounts it would have fired on, how many recovered on their own, what it would have cost in CSM time.</p></div>
-    <div class="card"><span class="pill p-swap">Ship</span><h4 style="margin-top:8px">Draft, review, launch</h4><p>AI drafts the Gainsight rule, the journey program spec, the email and the Appcues guide copy. A person reviews and publishes, and every change is logged.</p></div>
-  </div>
-
-  <h3>3 · Example: designing the posting-rescue trigger</h3>
-  <div class="scroll"><table class="tbl">
-    <thead><tr><th>Step</th><th>What I'd ask</th><th>Connectors</th></tr></thead>
-    <tbody>
-      <tr><td>Find the moment</td><td>"For SMB employers who churned last year, where did they stop in the four milestones?"</td><td><span class="src">Gainsight</span> <span class="src">Warehouse</span></td></tr>
-      <tr><td>Set the threshold</td><td>"At what applicants-vs-benchmark ratio on day 7 do postings stop recovering on their own?"</td><td><span class="src">Warehouse</span></td></tr>
-      <tr><td>Backtest</td><td>"Run 'under 50% at day 7' over last fall: how many fires a week, and how many of those recovered anyway?"</td><td><span class="src">Warehouse</span></td></tr>
-      <tr><td>Write the fix content</td><td>"Draft the three most common fixes, using our posting playbook"</td><td><span class="src">Glean</span></td></tr>
-      <tr><td>Build it</td><td>"Draft the Gainsight rule and journey program spec, and the Appcues guide for the posting edit page"</td><td><span class="src">Gainsight</span> <span class="src">Appcues</span></td></tr>
-      <tr><td>Watch it</td><td>"Every Monday, post the shut-off monitor to #scaled-cs and flag anything past threshold"</td><td><span class="src">Warehouse</span> <span class="src">Slack</span></td></tr>
-    </tbody></table></div>
-
-  <h3>4 · Guardrails</h3>
-  <div class="grid2">
-    <div class="card"><b>Read-only by default.</b> Connectors start with read access. Anything that writes (sends a message, changes a CRM field, publishes a guide) goes through a person until it has earned autonomy, the same ladder as the posting rescue.</div>
-    <div class="card"><b>Data stays inside approved systems.</b> Connectors run under IT and security review, with access scoped to the CS team's own permissions and an audit log of every action.</div>
-  </div>
-  <p class="note" style="margin-top:14px">This page and its prototype were built the same way: designed in a working session with Claude, built with Claude Code, versioned in GitHub, and hosted on Netlify. The real dashboard behind Part 1 already reads live CRM, Slack and database data through its own integrations.</p>
 </section>
 </div>
 <footer><div class="wrap">Prepared for the Manager, Scaled Customer Success panel · all prototype data is fictional · Handshake specifics marked "to validate" come from public materials.</div></footer>
